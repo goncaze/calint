@@ -88,6 +88,7 @@ class DataView(ft.View):
         lista_txt_eventos: list[ft.Text],
     ) -> ft.Container:
 
+        # DO QUE SE TRATA ESSE CÓDIGO COMENTADO??
         # linha_categoria = ft.Row(
         #     controls=[
         #         ft.Container(
