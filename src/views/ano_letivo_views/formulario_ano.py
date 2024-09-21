@@ -256,21 +256,80 @@ class FormularioAno(ft.Card):
             self.dataDB.insert_data(data_i_ferias_2)
             self.dataDB.insert_data(data_f_ferias_2)
 
-            self.preencher_database(data_i_letivo)
+            lista_dias_ferias_1 = self.preencher_db_ferias(
+                data_i_ferias_1, 
+                data_f_ferias_1, 
+                data_categoria_ferias
+            )
+            
+            self.preencher_db_dias_letivos(
+                data_i_letivo, 
+                data_categoria_Letivo, 
+                lista_dias_ferias_1
+            )
 
             self.page.go("/")                        
         else:
             self.update()
 
        
-    def preencher_database(self, data_i_letivo: Data):
+    def preencher_db_dias_letivos(
+            self, 
+            data_i_letivo :Data, 
+            data_categoria_Letivo :DataCategoria,
+            lista_dias_ferias_1 :list[str]
+        ):
         dia = 0
-        while dia <= 200:
-            data = datetime.strftime(
-                datetime.strptime(data_i_letivo.data,"%d/%m/%Y") + 
-                timedelta(dia), "%Y-%m-%d"
-            )
-            print(f"{data = }")
+        dias_letivos = 1
+        while dias_letivos <= 200:
             dia += 1
 
-        # self.dataDB.insert_data()
+            data = datetime.strftime(
+                datetime.strptime(data_i_letivo.data,"%d/%m/%Y") + 
+                timedelta(dia), "%d/%m/%Y"
+            )
+
+            data_dia_da_semana = datetime.date(datetime.strptime(data,"%d/%m/%Y"))
+
+            if data_dia_da_semana.isoweekday() == 6 or data_dia_da_semana.isoweekday() == 7:
+                print(f"Fim de semana = {data_dia_da_semana}")
+
+            elif data not in lista_dias_ferias_1:
+                novo_dia_letivo = Data(data=data, data_categoria=data_categoria_Letivo)
+                self.dataDB.insert_data(novo_dia_letivo)
+
+                print(f"{data = }")
+                dias_letivos += 1
+                
+        
+
+    def preencher_db_ferias(
+            self, 
+            data_i_ferias_1: Data, 
+            data_f_ferias_1: Data, 
+            data_categoria_ferias: DataCategoria
+        ) -> list[str]:
+
+        lista_dias_ferias_1 :list[str] = [data_i_ferias_1.data]
+        dia = 0
+
+        while True:
+            dia += 1
+
+            data = datetime.strftime(
+                datetime.strptime(data_i_ferias_1.data,"%d/%m/%Y") + 
+                timedelta(dia), "%d/%m/%Y"
+            )            
+            
+            lista_dias_ferias_1.append(data)
+
+            print(f"{data = }")
+
+            if data == data_f_ferias_1.data:
+                break
+            else:
+                # inserir dia de férias
+                nova_data = Data(data=data, data_categoria=data_categoria_ferias)
+                self.dataDB.insert_data(nova_data)
+        
+        return lista_dias_ferias_1
