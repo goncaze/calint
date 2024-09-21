@@ -2,7 +2,7 @@ class EventoCategoria:
     def __init__(
         self,
         categoria: str,
-        descricao: str,
+        descricao: str = "Não cadastrada",
         id: int = 0,
     ) -> None:
 

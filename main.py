@@ -21,6 +21,8 @@ from src.views.categoria_data_views.categoria_data_create_view import (
     CategoriaDataCreateView,
 )
 
+from src.views.ano_letivo_views.ano_letivo_view import AnoLetivoView
+
 from src.views.evento_views.evento_view import EventoView
 from src.views.evento_views.evento_create_view import EventoCreateView
 from src.views.evento_views.evento_edit_view import EventoEditView
@@ -34,8 +36,14 @@ DB_FILE: Path = ROOT_DIR / DB_NAME
 
 def main(page: ft.Page):
 
-    page.dark_theme = ft.theme.Theme(color_scheme_seed="green")
-    # page.dark_theme = ft.theme.Theme(ft.colors.GREEN_900)
+    # page.dark_theme = ft.theme.Theme(color_scheme_seed="green")
+    # page.dark_theme = ft.theme.Theme(ft.colors.GREEN)
+    # page.ligth_theme = ft.theme.Theme(ft.colors.GREEN)
+    page.theme_mode = ft.ThemeMode.LIGHT
+    page.theme = ft.Theme(
+        color_scheme_seed=ft.colors.GREEN,
+        # primary_text_theme=ft.TextTheme(),
+        )
 
     page.locale_configuration = ft.LocaleConfiguration(
         supported_locales=[
@@ -45,9 +53,11 @@ def main(page: ft.Page):
     )
 
     # page.theme = ft.theme.Theme(color_scheme_seed="#008B00")
-    dbs = DataDBSingleton(DB_FILE=DB_FILE)
-    page.window_width = 380
-    page.window_height = 500  # 650
+    dbs = DataDBSingleton(DB_FILE=DB_FILE)    
+    # page.window_width = 380
+    page.window.width = 360
+    # page.window_height = 500  # 650
+    page.window.height = 700
 
     navegador = Navegador(page)
 
@@ -214,6 +224,11 @@ def main(page: ft.Page):
             page.views.pop()
             page.views.append(CategoriaEventoView(page, dbs))
             page.route = "/categoria_evento"
+
+        elif rota == "/ano_letivo":
+            page.views.pop()
+            page.views.append(AnoLetivoView(page, dbs))
+            # page.route = "/categoria_evento"
 
         page.update()
 

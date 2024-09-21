@@ -4,11 +4,11 @@ from src.modelo.evento_categoria import EventoCategoria
 class Evento:
 
     def __init__(
-        self,
-        id: int,
+        self,        
         evento_categoria: EventoCategoria,
         evento: str,
-        descricao: str,
+        descricao: str = "Não cadastrada",
+        id: int = 0,
     ) -> None:
 
         self._id = id
@@ -53,8 +53,14 @@ class Evento:
               """
 
     def __repr__(self):
-        repr = f"EventoCategoria(id = {self._id},"
-        repr += f"titulo = {self._titulo},"
-        repr += f"evento_categoria = {self._evento_categoria.categoria},"
-        repr += f"descricao = {self._descricao})"
-        return repr
+        return f"""
+            EventoCategoria(id = {self._id},            
+                            evento_categoria = {self._evento_categoria.categoria},
+                            evento = {self._evento},
+                            descricao = {self._descricao})        
+        """
+        
+        
+        
+        
+        

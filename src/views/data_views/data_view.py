@@ -9,7 +9,7 @@ class DataView(ft.View):
         super().__init__()
         self.route = "/datas"
         self.appbar = ft.AppBar(
-            title=ft.Text("Datas List"), bgcolor="#005400", color="ffffff"
+            title=ft.Text("Datas"), bgcolor="#005400", color=ft.colors.WHITE
         )
         self.bgcolor = ft.colors.WHITE
         # self.horizontal_alignment = ft.CrossAxisAlignment.STRETCH
@@ -88,25 +88,6 @@ class DataView(ft.View):
         lista_txt_eventos: list[ft.Text],
     ) -> ft.Container:
 
-        # linha_categoria = ft.Row(
-        #     controls=[
-        #         ft.Container(
-        #             content=ft.Text(
-        #                 weight=ft.FontWeight.BOLD,
-        #                 value="Categoria:",
-        #                 color=ft.colors.GREY_900,
-        #             ),
-        #             margin=ft.margin.only(left=10, right=10),
-        #         ),
-        #         ft.Container(
-        #             content=txt_categoria,
-        #             margin=ft.margin.only(left=10, right=10),
-        #         ),
-        #     ]
-        # )
-        #     spacing=5,
-        # )
-
         coluna = ft.Column(spacing=1)
         # coluna.controls.append(linha_categoria)
 
@@ -121,24 +102,11 @@ class DataView(ft.View):
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                 ),
                 bgcolor="#00ac41",
-                # expand=True,
-                # padding=5,
                 padding=ft.padding.only(left=10, right=10),
                 margin=ft.margin.only(top=0, bottom=10, right=0, left=0),
                 height=30,
-                # width=100,
-                # border_radius=ft.border_radius.only(top_left=25, top_right=25),
                 border_radius=ft.border_radius.all(15),
                 gradient=ft.LinearGradient(colors=["#00ac41", "#cbff7f"]),
-                # ft.Container(
-                #     # content="",
-                #     bgcolor="#00ac41",
-                #     expand=True,
-                #     # padding=5,
-                #     margin=ft.margin.only(top=0, bottom=10, left=0, right=0),
-                #     height=30,
-                #     # border_radius=ft.border_radius.only(top_left=25, top_right=25),
-                # ),
             )
         )
 
@@ -149,6 +117,7 @@ class DataView(ft.View):
                         weight=ft.FontWeight.BOLD,
                         value="Eventos:",
                         color=ft.colors.BLUE_GREY_900,
+                        # color=ft.colors.AMBER,
                     ),
                     margin=ft.margin.only(left=10, right=10),
                 )
@@ -162,24 +131,12 @@ class DataView(ft.View):
                     )
                 )
 
-        container_dados_data = ft.Container(
+        # SUBSTITUIR POR CARD
+        # container_dados_data = ft.Container(
+        card_dados_data = ft.Card(
             content=coluna,
             margin=ft.margin.only(right=20),
-            bgcolor="#0dc053",
-            padding=ft.padding.only(left=5, top=5, right=5, bottom=15),
-            # border_radius=ft.border_radius.only(top_left=25, top_right=25),
-            gradient=ft.LinearGradient(
-                begin=ft.alignment.top_center,
-                end=ft.alignment.bottom_center,
-                colors=["#00ac41", "#cbff7f"],
-            ),
-            shadow=ft.BoxShadow(
-                spread_radius=0,
-                blur_radius=5,
-                color=ft.colors.BLACK,
-                # blur_style=ft.ShadowBlurStyle.OUTER,
-                offset=ft.Offset(x=5, y=5),
-            ),
+            color=ft.colors.AMBER_200,
         )
 
-        return container_dados_data
+        return card_dados_data

@@ -149,8 +149,11 @@ class DataDB:
         """
         sql: str = None
         parametros: tuple = None
+        # print(f"\n\n\t\t{data = }\n\n")
+        # print(f"\n\n\t\t {data.data is not None and data.data != "" = } \n\n")
 
         if data.id is not None and data.id > 0:
+            # print("\n\n\t\t if data.id is not None and data.id > 0: \n\n")
             parametros = (data.id,)
             # sql = "SELECT * FROM data WHERE id = ?"
             sql = """
@@ -197,6 +200,8 @@ class DataDB:
     # Iserir dados na tabela evento
     ##
     def insert_data(self, nova_data: Data) -> int:
+
+        # print(f"\n\n\t\t{nova_data = }\n\n")
 
         data_existente: Data = self.select_uma_data(nova_data)
 

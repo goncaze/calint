@@ -43,6 +43,11 @@ class Navegador:
                     label="Categoria Eventos",
                     selected_icon=ft.icons.MAIL,
                 ),
+                ft.NavigationDrawerDestination(
+                    icon_content=ft.Icon(ft.icons.EVENT_NOTE_OUTLINED),
+                    label="Ano letivo",
+                    selected_icon=ft.icons.MAIL,
+                ),                
             ],
             on_change=self.page_go,
         )
@@ -60,6 +65,8 @@ class Navegador:
                 self.page.go("/eventos")
             case 3:
                 self.page.go("/categoria_evento")
+            case 4:
+                self.page.go("/ano_letivo")
 
     def aux_page_go(self, url: str):
 

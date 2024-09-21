@@ -45,9 +45,10 @@ class EventoDB:
         self.dbs.executar_sql(sql, parametros)  # .rowcount
 
     # # -----------------------------------------------------------------------
-    # SELECT_EVENTOS
+    # SELECT_EVENTO
     ##
     def select_evento(self, id: int) -> Evento:
+        # print(f"\n\n\t\t def select_evento(self, id: int) -> Evento: \n\n")
         """
         Select um evento para um evento especificado (id)
         sql = 'SELECT * FROM evento WHERE id = ?'
@@ -58,6 +59,8 @@ class EventoDB:
         cursor = self.dbs.executar_sql(sql, parametro)
 
         registro = cursor.fetchone()
+
+        # print(f"\n\n\t\t{registro[0] = }\n\n")
 
         evento = Evento(
             id=registro[0],
@@ -115,6 +118,8 @@ class EventoDB:
     # Iserir dados na tabela evento
     ##
     def insert_evento(self, evento: Evento):
+        # print(f"\t\t\n{evento = }\n\n")
+        # print(f"\t\t\n{evento.evento_categoria = }\n\n")
 
         params = (
             evento.evento,
