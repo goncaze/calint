@@ -46,7 +46,8 @@ class SelecionarDataView(ft.View):
             open=True,
         )
 
-        self.page.overlay.append(self.date_picker)
+        # self.page.overlay.append(self.date_picker)
+        # self.page.open(self.date_picker)
 
         # ----------------------------------------------------
 
@@ -114,6 +115,12 @@ class SelecionarDataView(ft.View):
         ]
 
         self.listar_categoria_data()
+
+
+        # self.page.overlay.append(self.date_picker)
+        self.page.open(self.date_picker)
+
+
 
     @property
     def view(self) -> ft.View:

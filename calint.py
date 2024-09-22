@@ -81,6 +81,13 @@ def main(page: ft.Page):
                     # appbar=ft.AppBar(title=ft.Text("CALINT"), bgcolor="#008B00"),
                     appbar=ft.AppBar(title=ft.Text("CALINT")),
                     drawer=navegador.drawer(),
+                    # logo = ft.Image(src='imagens/Viana_Prancheta.png'),
+                    controls=[ft.Image(src='imagens/Viana_Prancheta.png')]
+                    # controls=ft.Column(
+                    #     controls=[ft.Image(src='imagens/Viana_Prancheta.png')],
+                    #     scroll=ft.ScrollMode.ALWAYS,
+                    #     expand=True,
+                    # )
                 )
             )
 
@@ -251,4 +258,4 @@ def main(page: ft.Page):
 
 
 if __name__ == "__main__":
-    ft.app(target=main)
+    ft.app(target=main, assets_dir='assets')
