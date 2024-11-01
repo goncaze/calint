@@ -26,6 +26,7 @@ from src.views.ano_letivo_views.ano_letivo_view import AnoLetivoView
 from src.views.evento_views.evento_view import EventoView
 from src.views.evento_views.evento_create_view import EventoCreateView
 from src.views.evento_views.evento_edit_view import EventoEditView
+from src.views.calendario.calendario import CalendarioView
 from src.views.navegacao import Navegador
 
 
@@ -231,10 +232,21 @@ def main(page: ft.Page):
             page.views.pop()
             page.views.append(CategoriaEventoView(page, dbs))
             page.route = "/categoria_evento"
-
+        
+        ######################################
+        # Rotas para categorias de evento
+        ##
         elif rota == "/ano_letivo":
             page.views.pop()
             page.views.append(AnoLetivoView(page, dbs))
+            # page.route = "/categoria_evento"
+
+        ######################################
+        # Rotas para categorias de evento
+        ##
+        elif rota == "/calendario":
+            page.views.pop()
+            page.views.append(CalendarioView(page))
             # page.route = "/categoria_evento"
 
         page.update()
