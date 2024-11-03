@@ -61,14 +61,18 @@ class CategoriaEventoView(ft.View):
                 value=eventoCategoria.descricao,
             )
 
+            txt_cor = ft.Text(
+                value = eventoCategoria.cor,
+            )
+
             lista_containers.append(
-                self.add_categoria_Linha(txt_categoria, txt_descricao)
+                self.add_categoria_Linha(txt_categoria, txt_descricao, txt_cor)
             )
 
         return lista_containers
 
     def add_categoria_Linha(
-        self, txt_categoria: ft.Text, txt_descricao: ft.Text
+        self, txt_categoria: ft.Text, txt_descricao: ft.Text, txt_cor: ft.Text
     ) -> ft.Container:
 
         linha1 = ft.Row(
@@ -106,7 +110,22 @@ class CategoriaEventoView(ft.View):
             spacing=5,
         )
 
-        coluna = ft.Column(controls=[linha1, linha2], spacing=1)
+        linha3 = ft.Row(
+            controls=[
+                ft.Text(
+                    weight=ft.FontWeight.BOLD,
+                    value="Cor:",
+                ),
+                ft.Container(
+                    bgcolor = txt_cor.value, #"#a233c4", # 
+                    width=50,
+                    height=15,
+                ),                
+            ],
+            spacing=5,
+        )        
+
+        coluna = ft.Column(controls=[linha1, linha2, linha3], spacing=1)
 
         container_categorias = ft.Container(
             content=coluna, margin=ft.margin.only(right=15, left=15)

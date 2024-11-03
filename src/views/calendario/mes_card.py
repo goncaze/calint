@@ -1,12 +1,24 @@
 import flet as ft
+import datetime
 import calendar
 from src.views.calendario.cartao import Cartao
-
+from src.data.data_db import DataDB
+from src.data.database_singleton import DataDBSingleton
+from src.modelo.data import Data
+from src.modelo.evento import Evento
+from src.modelo.evento_categoria import EventoCategoria
 
 
 class MesCard(Cartao):
 
-    def __init__(self, page: ft.Page, ano: int = 2024, mes: int = 10): 
+    def __init__(self, 
+                 page: ft.Page, 
+                 dbs: DataDBSingleton, 
+                 ano: int = 2024, 
+                 mes: int = 10,
+                 todas_datas: list[Data] = None, 
+                 todas_dt_literal: list[str] = None
+        ): 
         super().__init__()
         self.page = page
         self.page.expand = False
@@ -14,12 +26,15 @@ class MesCard(Cartao):
 
         self.ano = ano
         self.mes = mes
+        self.todas_datas: list[Data] = todas_datas 
+        self.todas_dt_literal: list[str] = todas_dt_literal
         self.titulo_mes = f"{calendar.month_name[mes].capitalize()} de {ano}"
 
         self.obj_calendar_d0 = calendar.Calendar(firstweekday=6)
         # obj_calendar_d1 = calendar.Calendar(firstweekday=1)
         calendar.setfirstweekday(calendar.SUNDAY)
-
+        self.dbs = dbs
+        self.data_db = DataDB(self.dbs)
 
         ###
         # As listas de containers representam as colunas dos dias da semana.
@@ -98,7 +113,7 @@ class MesCard(Cartao):
 
 
 
-        self.preencher_dias(ano=self.ano, mes=self.mes)
+        self.preencher_dias()
 
 
         ###
@@ -159,15 +174,47 @@ class MesCard(Cartao):
         )
         
 
+    def determinar_cor_data(self, dia: int)->str:    
+        # print(f"{self.todas_dt_literal = }")
+        # print(f"{len(self.todas_dt_literal) = }")
+        print(f"{dia = }")
+        print(f"{self.mes = }")
+        print(f"{self.ano = }")    
+
+        cor = ""
+        data_calendario = datetime.date(self.ano, self.mes, dia).strftime('%Y-%m-%d')
+        print("\n\n--------------")
+        print(f"\n\t\tdata_calendario") 
+        print(f"\t\t{data_calendario = }")    
+        print("--------------\n\n")
+
+        if calendar.weekday(self.ano, self.mes, dia) in (5,6):
+            # print("\n\n--------------")
+            # print("\t\tif calendar.weekday(self.ano, self.mes, dia) in (5,6):")
+            # print(f"\t\t{calendar.weekday(self.ano, self.mes, dia) = }")
+            # print("--------------\n\n")
+            cor = "#ea9999" 
+        elif data_calendario in self.todas_dt_literal:
+            print("\n\n--------------")
+            print(f" elif data_calendario in self.todas_dt_literal: ")
+            print(f"{data_calendario = }")            
+            print(f"{data_calendario in self.todas_dt_literal = }")
+            print("--------------\n\n")
+
+            indice = self.todas_dt_literal.index(data_calendario)
+            cor = self.todas_datas[indice].eventos[-1].evento_categoria.cor
+
+        return cor
+
     ##
     # Encapsula o dia do mês dentro de um container e o retorna como resultado.
     # Dias zero são encapsulados sem borda e valor.
     #
-    def container(self, dia: int, mes: int, ano: int) -> ft.Container:
+    def container(self, dia: int) -> ft.Container:
         if dia > 0:             
             container = ft.Container(                
                 content=ft.Text(value=dia),
-                bgcolor="#ea9999" if calendar.weekday(ano, mes, dia) in (5,6) else "",
+                bgcolor = self.determinar_cor_data(dia),#
                 border=ft.border.all(width = 1, color=ft.colors.GREY_300),
                 expand=True,
                 alignment=ft.alignment.center,
@@ -186,18 +233,19 @@ class MesCard(Cartao):
     # contendo os dias da semana do mês. Por exemplo, self.lista_container_01 
     # contém todos os dias da segunda-feira de um determinado mês.
     #
-    def preencher_dias(self, ano: int = 2024, mes: int = 10):
-        self.i = 0
+    def preencher_dias(self):
+        i = 0
+        # todas_datas = self.data_db.select_data_todas()
 
-        for dia in self.obj_calendar_d0.itermonthdays(ano, mes):
-            if self.i < 7:                
-                self.listas_containers[self.i].append(self.container(dia, mes, ano))
+        for dia in self.obj_calendar_d0.itermonthdays(self.ano, self.mes):
+            if i < 7:                
+                self.listas_containers[i].append(self.container(dia))
                 # print(f"{dia}", end="\t")
-                self.i += 1                
+                i += 1                
             else:
                 # print(f"\n{dia}", end="\t")
-                self.i = 1
-                self.listas_containers[0].append(self.container(dia, mes, ano))
+                i = 1
+                self.listas_containers[0].append(self.container(dia))
   
 
 

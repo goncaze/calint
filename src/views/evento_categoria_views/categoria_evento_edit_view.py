@@ -25,6 +25,7 @@ class CategoriaEventoEditView(CategoriaEventoCRUDView):
 
         self.ttf_categoria.value = self.eventoCategoria.categoria
         self.ttf_descricao.value = self.eventoCategoria.descricao
+        self.ttf_cor.value = self.eventoCategoria.cor
 
     def registrar(self, e):
         print("\n\ndef registrar(self, e):")
@@ -34,6 +35,7 @@ class CategoriaEventoEditView(CategoriaEventoCRUDView):
                 self.eventoCategoria.id,
                 self.ttf_categoria.value,
                 self.ttf_descricao.value,
+                self.ttf_cor.value
             )
             self.page.go("/categoria_evento_reload")
         else:

@@ -1,4 +1,3 @@
-from src.modelo.data_categoria import DataCategoria
 from src.modelo.evento import Evento
 from datetime import datetime
 
@@ -8,14 +7,14 @@ class Data:
         self,
         id: int = 0,
         data: str = "",
-        data_categoria: DataCategoria = None, # type: ignore
         eventos: list[Evento] = [],
+        # cor: str = "#f3f3f3",
     ) -> None:
 
         self._data = data  # datetime.strptime(data, "%d/%m/%Y")
-        self._data_categoria = data_categoria
         self._eventos = eventos
         self._id = id
+        # self._cor = cor
 
     @property
     def data(self) -> str:
@@ -29,13 +28,14 @@ class Data:
     def data(self, nova_data: str):
         self._data = nova_data  # datetime.strptime(nova_data, "%d/%m/%Y")
 
-    @property
-    def data_categoria(self) -> DataCategoria:
-        return self._data_categoria
+    # @property
+    # def cor(self) -> str:
+    #     return self._cor
 
-    @data_categoria.setter
-    def data_categoria(self, novo_data_categoria: DataCategoria):
-        self._data_categoria = novo_data_categoria
+    # @cor.setter 
+    # def cor(self, nova_cor: str) -> str:
+    #     self._cor = nova_cor
+    
 
     @property
     def id(self) -> int:
@@ -70,17 +70,16 @@ class Data:
             eventos += f"{evento.evento_categoria.categoria} | "
             # eventos += f"\t <>  Descrição: {evento.descricao} \n"
 
+        # Data categoria = {self._data_categoria.categoria}
         return f"""
             ID = {self._id}
-            Data = {self._data} 
-            Data categoria = {self._data_categoria.categoria}
-            
+            Data = {self._data}                         
             Eventos: {eventos}
             --------
             """
-
+    
+    # repr += f"data_categoria = {self._data_categoria.categoria})"    
     def __repr__(self):
         repr = f"Data(id = {self._id},"
-        repr += f"data = {self._data},"  # {self._data.strftime('%d/%m/%Y')},"
-        repr += f"data_categoria = {self._data_categoria.categoria})"
+        repr += f"data = {self._data})"  # {self._data.strftime('%d/%m/%Y')},"
         return repr

@@ -58,7 +58,7 @@ def main(page: ft.Page):
     # page.window_width = 380
     page.window.width = 360
     # page.window_height = 500  # 650
-    page.window.height = 700
+    page.window.height = 680
 
     navegador = Navegador(page)
 
@@ -83,7 +83,8 @@ def main(page: ft.Page):
                     appbar=ft.AppBar(title=ft.Text("CALINT")),
                     drawer=navegador.drawer(),
                     # logo = ft.Image(src='imagens/Viana_Prancheta.png'),
-                    controls=[ft.Image(src='imagens/Viana_Prancheta.png')]
+                    # controls=[ft.Image(src='imagens/Viana_Prancheta.png')]
+                    controls=[ft.Image(src='Viana_Prancheta.png')]
                     # controls=ft.Column(
                     #     controls=[ft.Image(src='imagens/Viana_Prancheta.png')],
                     #     scroll=ft.ScrollMode.ALWAYS,
@@ -237,17 +238,29 @@ def main(page: ft.Page):
         # Rotas para categorias de evento
         ##
         elif rota == "/ano_letivo":
-            page.views.pop()
-            page.views.append(AnoLetivoView(page, dbs))
-            # page.route = "/categoria_evento"
+            esta_em_pageviews = False
+            for i in range(len(page.views)):
+                if page.views[i].route == "/ano_letivo":
+                    esta_em_pageviews = True
+                    break
+
+            if not esta_em_pageviews:
+                page.views.append(AnoLetivoView(page, dbs))
 
         ######################################
-        # Rotas para categorias de evento
+        # Rotas para calendário
         ##
         elif rota == "/calendario":
-            page.views.pop()
-            page.views.append(CalendarioView(page))
-            # page.route = "/categoria_evento"
+            esta_em_pageviews = False
+            for i in range(len(page.views)):
+                if page.views[i].route == "/calendario":
+                    esta_em_pageviews = True
+                    break
+
+            if not esta_em_pageviews:
+                page.views.append(CalendarioView(page, dbs))
+            
+            
 
         page.update()
 

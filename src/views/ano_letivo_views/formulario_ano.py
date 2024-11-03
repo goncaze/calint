@@ -3,12 +3,12 @@ from datetime import datetime
 from datetime import timedelta
 from src.data.database_singleton import DataDBSingleton
 from src.modelo.data import Data
-from src.modelo.data_categoria import DataCategoria
+# from src.modelo.data_categoria import DataCategoria
 from src.modelo.evento import Evento
 from src.modelo.evento_categoria import EventoCategoria
 from src.data.data_db import DataDB
 from src.data.database_singleton import DataDBSingleton
-from src.data.data_categoria_db import DataCategoriaDB
+# from src.data.data_categoria_db import DataCategoriaDB
 from src.data.evento_db import EventoDB
 from src.data.evento_categoria_db import EventoCategoriaDB
 
@@ -17,20 +17,18 @@ class FormularioAno(ft.Card):
     def __init__(self, page:ft.Page, dbs: DataDBSingleton):
         super().__init__()
         self.page :ft.Page = page
-        self.dataDB :DataDB = DataDB(dbs)
-        self.dataCategoriaDB :DataCategoriaDB = DataCategoriaDB(dbs)
-        self.eventoDB :EventoDB = EventoDB(dbs)
-        self.eventoCategoriaDB :EventoCategoriaDB = EventoCategoriaDB(dbs)
+        self.data_db :DataDB = DataDB(dbs)        
+        # self.dataCategoria_db :DataCategoriaDB = DataCategoriaDB(dbs)
+        self.evento_db :EventoDB = EventoDB(dbs)
+        self.evento_cat_db :EventoCategoriaDB = EventoCategoriaDB(dbs)
 
-        self.data_categoria_Letivo :DataCategoria = DataCategoria("Letivo")
-        self.data_categoria_ferias :DataCategoria = DataCategoria("Férias")
 
-        self.ttf_inicio_letivo = ft.TextField(label="Início ano letivo", value="05/02/2024", expand=True)
-        self.ttf_fim_letivo = ft.TextField(label="Fim ano letivo", value="10/12/2024", expand=True)
-        self.ttf_inicio_ferias_1 = ft.TextField(label="Início férias coletivas 1", value="08/07/2024", expand=True)    
-        self.ttf_fim_ferias_1 = ft.TextField(label="Fim férias coletivas 1", value="22/07/2024", expand=True)
-        self.ttf_inicio_ferias_2 = ft.TextField(label="Início férias coletivas 2", value="01/01/2025", expand=True)    
-        self.ttf_fim_ferias_2 = ft.TextField(label="Fim férias coletivas 2", value="31/01/2025", expand=True)
+        self.ttf_inicio_letivo = ft.TextField(label="Início ano letivo", value="05-02-2024", expand=True)
+        self.ttf_fim_letivo = ft.TextField(label="Fim ano letivo", value="10-12-2024", expand=True)
+        self.ttf_inicio_ferias_1 = ft.TextField(label="Início férias coletivas 1", value="08-07-2024", expand=True)    
+        self.ttf_fim_ferias_1 = ft.TextField(label="Fim férias coletivas 1", value="22-07-2024", expand=True)
+        self.ttf_inicio_ferias_2 = ft.TextField(label="Início férias coletivas 2", value="01-01-2025", expand=True)    
+        self.ttf_fim_ferias_2 = ft.TextField(label="Fim férias coletivas 2", value="31-01-2025", expand=True)
 
         self.dtpkr_i_letivo = ft.DatePicker(on_change = self.change_date_i_letivo,)
         self.dtpkr_f_letivo = ft.DatePicker(on_change = self.change_date_f_letivo,)
@@ -123,27 +121,27 @@ class FormularioAno(ft.Card):
 
 
     def change_date_i_letivo(self, e: ft.ControlEvent):
-        self.ttf_inicio_letivo.value = self.dtpkr_i_letivo.value.strftime('%d/%m/%Y')
+        self.ttf_inicio_letivo.value = self.dtpkr_i_letivo.value.strftime('%d-%m-%Y')
         self.ttf_inicio_letivo.update()
 
     def change_date_f_letivo(self, e: ft.ControlEvent):
-        self.ttf_fim_letivo.value = self.dtpkr_f_letivo.value.strftime('%d/%m/%Y')
+        self.ttf_fim_letivo.value = self.dtpkr_f_letivo.value.strftime('%d-%m-%Y')
         self.ttf_fim_letivo.update()
 
     def change_date_i_ferias_1(self, e: ft.ControlEvent):
-        self.ttf_inicio_ferias_1.value = self.dtpkr_i_ferias_1.value.strftime('%d/%m/%Y')
+        self.ttf_inicio_ferias_1.value = self.dtpkr_i_ferias_1.value.strftime('%d-%m-%Y')
         self.ttf_inicio_ferias_1.update()
 
     def change_date_f_ferias_1(self, e: ft.ControlEvent):
-        self.ttf_fim_ferias_1.value = self.dtpkr_f_ferias_1.value.strftime('%d/%m/%Y')
+        self.ttf_fim_ferias_1.value = self.dtpkr_f_ferias_1.value.strftime('%d-%m-%Y')
         self.ttf_fim_ferias_1.update()
         
     def change_date_i_ferias_2(self, e: ft.ControlEvent):
-        self.ttf_inicio_ferias_2.value = self.dtpkr_i_ferias_2.value.strftime('%d/%m/%Y')
+        self.ttf_inicio_ferias_2.value = self.dtpkr_i_ferias_2.value.strftime('%d-%m-%Y')
         self.ttf_inicio_ferias_2.update()
 
     def change_date_f_ferias_2(self, e: ft.ControlEvent):
-        self.ttf_fim_ferias_2.value = self.dtpkr_f_ferias_2.value.strftime('%d/%m/%Y')        
+        self.ttf_fim_ferias_2.value = self.dtpkr_f_ferias_2.value.strftime('%d-%m-%Y')        
         self.ttf_fim_ferias_2.update()
 
 
@@ -185,87 +183,126 @@ class FormularioAno(ft.Card):
 
 
     def salvar(self, e):
-        if self.validar():        
-            data_i_letivo = Data(data=self.ttf_inicio_letivo.value)
-            data_f_letivo = Data(data=self.ttf_fim_letivo.value)
-            data_i_ferias_1 = Data(data=self.ttf_inicio_ferias_1.value)
-            data_f_ferias_1 = Data(data=self.ttf_fim_ferias_1.value)
-            data_i_ferias_2 = Data(data=self.ttf_inicio_ferias_2.value)
-            data_f_ferias_2 = Data(data=self.ttf_fim_ferias_2.value)
+        if self.validar():    
+            ##
+            #  Resetar tabelas
+            #
+            self.resetar_tabelas()   
 
-            # Inserir categorias de datas no banco de dados
-            data_categoria_Letivo :DataCategoria = DataCategoria("Letivo")
-            data_categoria_ferias :DataCategoria = DataCategoria("Férias")
-
-            self.dataCategoriaDB.insert_data_categoria(data_categoria_Letivo)
-            data_categoria_Letivo = self.dataCategoriaDB.select_data_categoria(1)
-            self.dataCategoriaDB.insert_data_categoria(data_categoria_ferias)
-            data_categoria_ferias = self.dataCategoriaDB.select_data_categoria(2)
-
-            # Inserir categoria de evento no banco de dados
-            evento_categoria :EventoCategoria = EventoCategoria("Longo período")
-            self.eventoCategoriaDB.insert_evento_categoria(evento_categoria)
-            evento_categoria = self.eventoCategoriaDB.select_evento_categoria(1)
-
-            # Inserir eventos no banco de dados
-            evento_i_letivo :Evento = Evento(evento_categoria, "Início ano letivo")
-            evento_f_letivo :Evento = Evento(evento_categoria, "Fim ano letivo")
-            evento_i_ferias_1 :Evento = Evento(evento_categoria, "Início férias 1")
-            evento_f_ferias_1 :Evento = Evento(evento_categoria, "Fim férias 1")
-            evento_i_ferias_2 :Evento = Evento(evento_categoria, "Início férias 2")
-            evento_f_ferias_2 :Evento = Evento(evento_categoria, "Fim férias 2")
-
-            self.eventoDB.insert_evento(evento_i_letivo)
-            evento_i_letivo = self.eventoDB.select_evento(1)
-            self.eventoDB.insert_evento(evento_f_letivo)
-            evento_f_letivo = self.eventoDB.select_evento(2)
-            self.eventoDB.insert_evento(evento_i_ferias_1)
-            evento_i_ferias_1 = self.eventoDB.select_evento(3)
-            self.eventoDB.insert_evento(evento_f_ferias_1)
-            evento_f_ferias_1 = self.eventoDB.select_evento(4)
-            self.eventoDB.insert_evento(evento_i_ferias_2)
-            evento_i_ferias_2 = self.eventoDB.select_evento(5)
-            self.eventoDB.insert_evento(evento_f_ferias_2)
-            evento_f_ferias_2 = self.eventoDB.select_evento(6)
-
-            # Preparar datas
-            data_i_letivo.data_categoria = data_categoria_Letivo
-            data_i_letivo.eventos = [evento_i_letivo]
-
-            data_f_letivo.data_categoria = data_categoria_Letivo
-            data_f_letivo.eventos = [evento_f_letivo]
-
-            data_i_ferias_1.data_categoria = data_categoria_ferias
-            data_i_ferias_1.eventos = [evento_i_ferias_1]
-
-            data_f_ferias_1.data_categoria = data_categoria_ferias
-            data_f_ferias_1.eventos = [evento_f_ferias_1]
-
-            data_i_ferias_2.data_categoria = data_categoria_ferias
-            data_i_ferias_2.eventos = [evento_i_ferias_2]
-
-            data_f_ferias_2.data_categoria = data_categoria_ferias
-            data_f_ferias_2.eventos = [evento_f_ferias_2]
+            ##
+            #  Inserir categoria de evento no banco de dados
+            #
+            evento_cat_Letivo = EventoCategoria("Letivo")
+            evento_cat_ferias = EventoCategoria("Férias")            
+            evento_cat_Letivo.id = self.evento_cat_db.insert_evento_categoria(evento_cat_Letivo)
+            evento_cat_ferias.id = self.evento_cat_db.insert_evento_categoria(evento_cat_ferias)
 
 
-            # Inserir datas
-            self.dataDB.insert_data(data_i_letivo)
-            self.dataDB.insert_data(data_f_letivo)
-            self.dataDB.insert_data(data_i_ferias_1)
-            self.dataDB.insert_data(data_f_ferias_1)
-            self.dataDB.insert_data(data_i_ferias_2)
-            self.dataDB.insert_data(data_f_ferias_2)
+            ##
+            #  Inserir eventos no banco de dados
+            #
+            evento_letivo :Evento = Evento(evento_cat_Letivo, "Dia letivo")
+            evento_i_letivo :Evento = Evento(evento_cat_Letivo, "Início ano letivo")
+            evento_f_letivo :Evento = Evento(evento_cat_Letivo, "Fim ano letivo")
+            evento_ferias :Evento = Evento(evento_cat_ferias, "Férias")
+            evento_i_ferias_1 :Evento = Evento(evento_cat_ferias, "Início férias 1")
+            evento_f_ferias_1 :Evento = Evento(evento_cat_ferias, "Fim férias 1")
+            evento_i_ferias_2 :Evento = Evento(evento_cat_ferias, "Início férias 2")
+            evento_f_ferias_2 :Evento = Evento(evento_cat_ferias, "Fim férias 2")
 
-            lista_dias_ferias_1 = self.preencher_db_ferias(
+            evento_letivo.id = self.evento_db.insert_evento(evento_letivo)
+            evento_ferias.id = self.evento_db.insert_evento(evento_ferias)
+
+            evento_i_letivo.id = self.evento_db.insert_evento(evento_i_letivo)
+            evento_f_letivo.id = self.evento_db.insert_evento(evento_f_letivo)            
+            
+            evento_i_ferias_1.id = self.evento_db.insert_evento(evento_i_ferias_1)            
+            evento_f_ferias_1.id = self.evento_db.insert_evento(evento_f_ferias_1)            
+            
+            evento_i_ferias_2.id = self.evento_db.insert_evento(evento_i_ferias_2)            
+            evento_f_ferias_2.id = self.evento_db.insert_evento(evento_f_ferias_2)
+            
+
+            ##
+            #  Preparar datas para inserção
+            #
+            data_i_letivo = Data(
+                data=datetime.strftime(
+                    datetime.strptime(self.ttf_inicio_letivo.value, '%d-%m-%Y'), 
+                    '%Y-%m-%d'
+                ), 
+                eventos=[evento_i_letivo, evento_letivo]
+            )
+            data_f_letivo = Data(
+                data=datetime.strftime(
+                    datetime.strptime(self.ttf_fim_letivo.value, '%d-%m-%Y'), 
+                    '%Y-%m-%d'
+                ), 
+                eventos=[evento_f_letivo, evento_letivo]
+            )
+            data_i_ferias_1 = Data(
+                data=datetime.strftime(
+                    datetime.strptime(self.ttf_inicio_ferias_1.value, '%d-%m-%Y'), 
+                    '%Y-%m-%d'
+                ), 
+                eventos=[evento_i_ferias_1, evento_ferias]
+            )
+            data_f_ferias_1 = Data(
+                data=datetime.strftime(
+                    datetime.strptime(self.ttf_fim_ferias_1.value, '%d-%m-%Y'), 
+                    '%Y-%m-%d'
+                ), 
+                eventos=[evento_f_ferias_1, evento_ferias]
+            )
+            data_i_ferias_2 = Data(
+                data=datetime.strftime(
+                    datetime.strptime(self.ttf_inicio_ferias_2.value, '%d-%m-%Y'), 
+                    '%Y-%m-%d'
+                ), 
+                eventos=[evento_i_ferias_2, evento_ferias]
+            )
+            data_f_ferias_2 = Data(
+                data=datetime.strftime(
+                    datetime.strptime(self.ttf_fim_ferias_2.value, '%d-%m-%Y'), 
+                    '%Y-%m-%d'
+                ), 
+                eventos=[evento_f_ferias_2, evento_ferias]
+            )
+
+            ##
+            #  Inserir datas com marco inicial e final
+            #
+            self.data_db.insert_data(data_i_letivo)
+            self.data_db.insert_data(data_f_letivo)
+            self.data_db.insert_data(data_i_ferias_1)
+            self.data_db.insert_data(data_f_ferias_1)
+            self.data_db.insert_data(data_i_ferias_2)
+            self.data_db.insert_data(data_f_ferias_2)
+
+            ##
+            #  Inserir datas das férias
+            #
+            lista_dias_ferias_1: list[datetime.date] = self.preencher_db_ferias(
                 data_i_ferias_1, 
                 data_f_ferias_1, 
-                data_categoria_ferias
+                evento_ferias
             )
-            
+
+            lista_dias_ferias_2: list[datetime.date] = self.preencher_db_ferias(
+                data_i_ferias_2, 
+                data_f_ferias_2, 
+                evento_ferias
+            )
+
+            ##
+            #  Inserir datas para os dias letivos
+            #            
             self.preencher_db_dias_letivos(
                 data_i_letivo, 
-                data_categoria_Letivo, 
-                lista_dias_ferias_1
+                data_f_letivo,
+                evento_letivo,
+                lista_dias_ferias_1,
+                lista_dias_ferias_2
             )
 
             self.page.go("/")                        
@@ -276,60 +313,100 @@ class FormularioAno(ft.Card):
     def preencher_db_dias_letivos(
             self, 
             data_i_letivo :Data, 
-            data_categoria_Letivo :DataCategoria,
-            lista_dias_ferias_1 :list[str]
+            data_f_letivo :Data, 
+            evento_letivo: Evento,
+            lista_dias_ferias_1: list[datetime.date],
+            lista_dias_ferias_2: list[datetime.date],
         ):
         dia = 0
         dias_letivos = 1
-        while dias_letivos <= 200:
+
+        # Analisar
+        # data_final = datetime.strftime(
+        #     datetime.strptime(data_f_letivo.data,"%d/%m/%Y") + 
+        #     timedelta(dia), "%d/%m/%Y"
+        # )
+
+        # Converter a string para objeto de data
+        dt_i_letivo = datetime.strptime(data_i_letivo.data, '%Y-%m-%d').date()
+        dt_f_letivo = datetime.strptime(data_f_letivo.data, '%Y-%m-%d').date()
+
+
+        # while dias_letivos <= 200:
+        while True:
             dia += 1
 
-            data = datetime.strftime(
-                datetime.strptime(data_i_letivo.data,"%d/%m/%Y") + 
-                timedelta(dia), "%d/%m/%Y"
-            )
+            # data = datetime.strftime(
+            #     datetime.strptime(data_i_letivo.data,"%d/%m/%Y") + 
+            #     timedelta(dia), "%d/%m/%Y"
+            # )
 
-            data_dia_da_semana = datetime.date(datetime.strptime(data,"%d/%m/%Y"))
+            data_incrementada: datetime.date = dt_i_letivo + timedelta(dia)
 
-            if data_dia_da_semana.isoweekday() == 6 or data_dia_da_semana.isoweekday() == 7:
-                print(f"Fim de semana = {data_dia_da_semana}")
+            if data_incrementada == dt_f_letivo:
+                break
 
-            elif data not in lista_dias_ferias_1:
-                novo_dia_letivo = Data(data=data, data_categoria=data_categoria_Letivo)
-                self.dataDB.insert_data(novo_dia_letivo)
+            # data_dia_da_semana = datetime.date(datetime.strptime(data,"%d/%m/%Y"))
 
-                print(f"{data = }")
+            # if data_dia_da_semana.isoweekday() == 6 or data_dia_da_semana.isoweekday() == 7:
+                # print(f"Fim de semana = {data_dia_da_semana}")
+            # if ( data_dia_da_semana.isoweekday() < 6 ): 
+            if ( data_incrementada.isoweekday() < 6 ): 
+                if ( data_incrementada not in lista_dias_ferias_1 ) and ( data_incrementada not in lista_dias_ferias_2 ):
+                    novo_dia_letivo = Data(data=data_incrementada.strftime('%Y-%m-%d'), eventos=[evento_letivo])
+                    self.data_db.insert_data(novo_dia_letivo)
+
+                #### >>>>>>>>>> print(f"{data_incrementada = }")
                 dias_letivos += 1
                 
         
 
     def preencher_db_ferias(
             self, 
-            data_i_ferias_1: Data, 
-            data_f_ferias_1: Data, 
-            data_categoria_ferias: DataCategoria
-        ) -> list[str]:
+            data_i_ferias: Data, 
+            data_f_ferias: Data,
+            evento_ferias: Evento
+        ) -> list[datetime.date]:
 
-        lista_dias_ferias_1 :list[str] = [data_i_ferias_1.data]
+        lista_dias_ferias :list[datetime.date] = [data_i_ferias.data]
+
+        dt_i_ferias = datetime.strptime(data_i_ferias.data, '%Y-%m-%d').date()
+        dt_f_ferias = datetime.strptime(data_f_ferias.data, '%Y-%m-%d').date()
+
         dia = 0
 
         while True:
             dia += 1
 
-            data = datetime.strftime(
-                datetime.strptime(data_i_ferias_1.data,"%d/%m/%Y") + 
-                timedelta(dia), "%d/%m/%Y"
-            )            
-            
-            lista_dias_ferias_1.append(data)
+            # data = datetime.strftime(
+            #     datetime.strptime(data_i_ferias.data,"%d/%m/%Y") + 
+            #     timedelta(dia), "%d/%m/%Y"
+            # )            
+            data_incrementada = dt_i_ferias + timedelta(dia)
 
-            print(f"{data = }")
+            lista_dias_ferias.append(data_incrementada)
 
-            if data == data_f_ferias_1.data:
+            #### >>>>>>>>>> print(f"{data_incrementada = }")
+
+            if data_incrementada == dt_f_ferias:
+                # última data inserida previamente
                 break
             else:
-                # inserir dia de férias
-                nova_data = Data(data=data, data_categoria=data_categoria_ferias)
-                self.dataDB.insert_data(nova_data)
+                ##
+                #  inserir dia de férias na tabela
+                nova_data = Data(data=data_incrementada.strftime('%Y-%m-%d'), eventos=[evento_ferias])
+                self.data_db.insert_data(nova_data)
         
-        return lista_dias_ferias_1
+        return lista_dias_ferias
+    
+    
+    def resetar_tabelas(self):
+        self.data_db.excluir_tabela_evento_data()
+        self.evento_db.excluir_tabela()
+        self.evento_cat_db.excluir_tabela()
+        self.data_db.excluir_tabela_data()
+
+        self.data_db.criar_tabela_data()
+        self.evento_cat_db.criar_tabela_evento_categoria()
+        self.evento_db.criar_tabela_evento()        
+        self.data_db.criar_tabela_evento_data()

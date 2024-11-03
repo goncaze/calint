@@ -23,7 +23,9 @@ class CategoriaEventoCreateView(CategoriaEventoCRUDView):
     def registrar(self, e):
         if self.validar():
             eventoCategoria = EventoCategoria(
-                self.ttf_categoria.value, self.ttf_descricao.value
+                categoria = self.ttf_categoria.value, 
+                descricao = self.ttf_descricao.value, 
+                cor = self.ttf_cor.value
             )
             self.eventoCategoriaDB.insert_evento_categoria(eventoCategoria)
             self.page.go("/categoria_evento_reload")

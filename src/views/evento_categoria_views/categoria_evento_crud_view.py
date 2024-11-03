@@ -13,8 +13,13 @@ class CategoriaEventoCRUDView(ft.View):
         )
 
         self.ttf_descricao = ft.TextField(
-            label="descricao",
-            hint_text="descricao",
+            label="Descricao",
+            hint_text="Descricao",
+        )
+
+        self.ttf_cor = ft.TextField(
+            label="Cor",
+            hint_text="Cor",
         )
 
         self.btn_registrar = ft.ElevatedButton(text="Salvar", on_click=self.registrar)
@@ -27,6 +32,7 @@ class CategoriaEventoCRUDView(ft.View):
             controls=[
                 self.ttf_categoria,
                 self.ttf_descricao,
+                self.ttf_cor,
                 ft.Container(margin=ft.margin.all(5)),
                 ft.Row(
                     controls=[
@@ -54,6 +60,7 @@ class CategoriaEventoCRUDView(ft.View):
     def btn_limpar_form(self, e: ft.ControlEvent):
         self.ttf_categoria.value = None
         self.ttf_descricao.value = None
+        self.ttf_cor.value = None
         self.atualizar_page()
 
     def atualizar_page(self):

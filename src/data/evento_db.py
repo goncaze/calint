@@ -11,6 +11,15 @@ class EventoDB:
         self.eventoCategoriaDB = EventoCategoriaDB(dbs)
         self.criar_tabela_evento()
 
+
+    ##
+    # EXCLUIR TABELAS
+    ##
+    def excluir_tabela(self) -> None:
+        excluir_tabela = "DROP TABLE IF EXISTS evento"
+        self.dbs.executar_sql(excluir_tabela)
+
+
     ##
     # CRIAR TABELAS
     ##
@@ -117,7 +126,7 @@ class EventoDB:
     # # -----------------------------------------------------------------------
     # Iserir dados na tabela evento
     ##
-    def insert_evento(self, evento: Evento):
+    def insert_evento(self, evento: Evento)->int:
         # print(f"\t\t\n{evento = }\n\n")
         # print(f"\t\t\n{evento.evento_categoria = }\n\n")
 
@@ -133,7 +142,9 @@ class EventoDB:
             VALUES(?,?,?)
             """
 
-        self.dbs.executar_sql(novo_evento, params)  # .rowcount
+        cursor = self.dbs.executar_sql(novo_evento, params)  # .rowcount
+        
+        return cursor.lastrowid
 
     # # -----------------------------------------------------------------------
     # Select somente eventos relacionados a uma data específica

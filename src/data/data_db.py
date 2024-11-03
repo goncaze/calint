@@ -16,15 +16,26 @@ class DataDB:
         self.criar_tabela_evento_data()
 
     ##
+    # EXCLUIR TABELAS
+    ##
+    def excluir_tabela_data(self) -> None:
+        excluir_tabela = "DROP TABLE IF EXISTS data"
+        self.dbs.executar_sql(excluir_tabela)
+
+    def excluir_tabela_evento_data(self) -> None:
+        excluir_tabela_evento = "DROP TABLE IF EXISTS evento_data"
+        self.dbs.executar_sql(excluir_tabela_evento)
+
+    ##
     # CRIAR TABELAS
     ##
     def criar_tabela_data(self) -> None:
         criar_tabela_data = """CREATE TABLE IF NOT EXISTS data(
-            id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            data TEXT NOT NULL UNIQUE,         
-            data_categoria_id INTEGER NOT NULL,
-            FOREIGN KEY(data_categoria_id) REFERENCES data_categoria(id) ON DELETE RESTRICT
+            id INTEGER PRIMARY KEY, 
+            data TEXT NOT NULL UNIQUE
         )"""
+            # data_categoria_id INTEGER NOT NULL,
+            # FOREIGN KEY(data_categoria_id) REFERENCES data_categoria(id) ON DELETE RESTRICT
         self.dbs.executar_sql(criar_tabela_data)
 
     def criar_tabela_evento_data(self) -> None:
@@ -36,23 +47,24 @@ class DataDB:
         )"""
         self.dbs.executar_sql(criar_tabela_evento_data)
 
-    # # -----------------------------------------------------------------------
-    # UPDATE registro na tabela data
-    ##
-    def update_data(self, data: Data):
-        parametros = (data.data_categoria.id, data.id)
+    # # # -----------------------------------------------------------------------
+    # # UPDATE registro na tabela data
+    # ##
+    # def update_data(self, data: Data):
+    #     parametros = (data.cor, data.id)
 
-        sql = """
-            UPDATE
-                data
-            SET  
-                data_categoria_id = ?
-            WHERE 
-                id = ?
-            """
+    #     sql = """
+    #         UPDATE
+    #             data
+    #         SET  
+    #             cor = ?
+    #         WHERE 
+    #             id = ?
+    #         """
 
-        self.dbs.executar_sql(sql, parametros)  # .rowcount
-        self.update_data_evento(data)
+    #     self.dbs.executar_sql(sql, parametros)  # .rowcount
+    #     self.update_data_evento(data)
+
 
     def update_data_evento(self, data: Data):
         lista_id_eventos_atual = self.select_id_eventos_por_id_data(data)
@@ -117,7 +129,7 @@ class DataDB:
 
         sql = """
             SELECT 
-                id, strftime('%d/%m/%Y', dt.data) as data, data_categoria_id 
+                id, data
             FROM 
                 data as dt
             ORDER BY 
@@ -130,7 +142,7 @@ class DataDB:
             data = Data(
                 id=registro[0],
                 data=registro[1],
-                data_categoria=self.dataCategoriaDB.select_data_categoria(registro[2]),
+                # data_categoria=self.dataCategoriaDB.select_data_categoria(registro[2]),
                 eventos=self.select_eventos_por_data(registro[0]),
             )
             lista_data.append(data)
@@ -156,21 +168,24 @@ class DataDB:
             # print("\n\n\t\t if data.id is not None and data.id > 0: \n\n")
             parametros = (data.id,)
             # sql = "SELECT * FROM data WHERE id = ?"
+            ############## # id, strftime('%d/%m/%Y', data) as data # #############
             sql = """
-                SELECT 
-                    id, strftime('%d/%m/%Y', data) as data, data_categoria_id 
+                SELECT                     
+                    id, data
                 FROM 
                     data 
                 WHERE 
                     id = ?
             """
         elif data.data is not None and data.data != "":
-            parametros = (
-                datetime.strftime(datetime.strptime(data.data, "%d/%m/%Y"), "%Y-%m-%d"),
-            )
+            # parametros = (
+            #     datetime.strftime(datetime.strptime(data.data, "%d/%m/%Y"), "%Y-%m-%d"),
+            # )
+            parametros = (data.data,)
+
             sql = """
                 SELECT 
-                    id, strftime('%d/%m/%Y', data) as data, data_categoria_id 
+                    id, data
                 FROM 
                     data
                 WHERE 
@@ -187,9 +202,9 @@ class DataDB:
                     id=registro[0],
                     # data=datetime.strftime(registro[1], "%d/%m/%Y"),
                     data=registro[1],
-                    data_categoria=self.dataCategoriaDB.select_data_categoria(
-                        registro[2]
-                    ),
+                    # data_categoria=self.dataCategoriaDB.select_data_categoria(
+                    #     registro[2]
+                    # ),
                     eventos=self.select_eventos_por_data(registro[0]),
                 )
                 return data
@@ -207,17 +222,17 @@ class DataDB:
 
         if not data_existente:
             parametros: tuple = (
-                # datetime.strftime(nova_data.data, "%Y/%m/%d"),
-                datetime.strftime(
-                    datetime.strptime(nova_data.data, "%d/%m/%Y"), "%Y-%m-%d"
-                ),
-                nova_data.data_categoria.id,
+                ## datetime.strftime(nova_data.data, "%Y/%m/%d"),
+                # datetime.strftime(
+                #     datetime.strptime(nova_data.data, "%d/%m/%Y"), "%Y-%m-%d"
+                # ),
+                nova_data.data,
             )
 
             sql = """
                 INSERT INTO 
-                    data(data, data_categoria_id)
-                VALUES(?,?)
+                    data(data)
+                VALUES(?)
                 """
 
             data_id = self.dbs.executar_sql(sql, parametros).lastrowid

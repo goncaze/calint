@@ -8,6 +8,15 @@ class EventoCategoriaDB:
         self.dbs = dbs
         self.criar_tabela_evento_categoria()
 
+
+    ##
+    # EXCLUIR TABELAS
+    ##
+    def excluir_tabela(self) -> None:
+        excluir_tabela = "DROP TABLE IF EXISTS evento_categoria"
+        self.dbs.executar_sql(excluir_tabela)
+
+
     ##
     # CRIAR TABELAS
     ##
@@ -15,7 +24,8 @@ class EventoCategoriaDB:
         criar_tabela_evento_categoria = """CREATE TABLE IF NOT EXISTS evento_categoria(
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
         categoria TEXT NOT NULL UNIQUE,
-        descricao TEXT DEFAULT "Não cadastrada" NOT NULL
+        descricao TEXT DEFAULT "Não cadastrada" NOT NULL,
+        cor TEXT
         )"""
         self.dbs.executar_sql(criar_tabela_evento_categoria)
 
@@ -33,7 +43,10 @@ class EventoCategoriaDB:
 
         for registro in resultado:
             evento_categoria = EventoCategoria(
-                id=registro[0], categoria=registro[1], descricao=registro[2]
+                id = registro[0], 
+                categoria = registro[1], 
+                descricao = registro[2], 
+                cor = registro[3]
             )
             lista_evento_categoria.append(evento_categoria)
 
@@ -55,7 +68,10 @@ class EventoCategoriaDB:
         registro = cursor.fetchone()
 
         evento_categoria = EventoCategoria(
-            id=registro[0], categoria=registro[1], descricao=registro[2]
+            id = registro[0], 
+            categoria = registro[1], 
+            descricao = registro[2], 
+            cor = registro[3]
         )
 
         return evento_categoria
@@ -63,14 +79,14 @@ class EventoCategoriaDB:
     # # -----------------------------------------------------------------------
     # UPDATE registro na tabela evento_categoria
     ##
-    def update_evento_categoria(self, id: int, categoria: str, descricao: str):
+    def update_evento_categoria(self, id: int, categoria: str, descricao: str, cor: str):
 
-        parametros = (categoria, descricao, id)
+        parametros = (categoria, descricao, cor, id)
 
         sql = """
             UPDATE 
                 evento_categoria
-            SET categoria = ?, descricao = ?
+            SET categoria = ?, descricao = ?, cor = ?
             WHERE id = ?
             """
 
@@ -92,7 +108,7 @@ class EventoCategoriaDB:
     # # -----------------------------------------------------------------------
     # Iserir dados na tabela evento_categoria
     ##
-    def insert_evento_categoria(self, evento_categoria: EventoCategoria):
+    def insert_evento_categoria(self, evento_categoria: EventoCategoria)->int:
 
         params = (
             evento_categoria.categoria,
@@ -101,12 +117,16 @@ class EventoCategoriaDB:
                 if evento_categoria.descricao != ""
                 else "Não cadastrada"
             ),
+            evento_categoria.cor
         )
 
         novo_evento_categoria = """
             INSERT INTO 
-                evento_categoria(categoria, descricao) 
-            VALUES(?,?)
+                evento_categoria(categoria, descricao, cor) 
+            VALUES(?,?, ?)
             """
 
-        self.dbs.executar_sql(novo_evento_categoria, params)  # .rowcount
+        cursor = self.dbs.executar_sql(novo_evento_categoria, params)  # .rowcount
+
+        return cursor.lastrowid
+

@@ -43,6 +43,11 @@ class Evento:
     @property
     def id(self) -> int:
         return self._id
+    
+    @id.setter
+    def id(self, novo_id: int) -> int:
+        self._id = novo_id
+            
 
     def __str__(self):
         return f"""

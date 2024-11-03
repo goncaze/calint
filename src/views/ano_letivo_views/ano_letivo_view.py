@@ -8,8 +8,11 @@ class AnoLetivoView(ft.View):
     def __init__(self, page: ft.Page, dbs: DataDBSingleton):
 
         super().__init__()
+        self.route = "/ano_letivo"
+        self.appbar = ft.AppBar(title=ft.Text("Reiniciar ano letivo"))        
         self.dbs :DataDBSingleton = dbs
         self.page :ft.Page = page
+
         self.formulario_ano :FormularioAno = FormularioAno(self.page, self.dbs)
 
         self.controls = [

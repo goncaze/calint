@@ -62,10 +62,10 @@ class DataView(ft.View):
                 color=ft.colors.GREY_100,
             )
 
-            txt_categoria = ft.Text(
-                value=data.data_categoria.categoria,
-                color="#000068",
-            )
+            # txt_categoria = ft.Text(
+            #     value=data.data_categoria.categoria,
+            #     color="#000068",
+            # )
 
             lista_txt_eventos: list[ft.Text] = []
             for evento in data.eventos:
@@ -76,7 +76,9 @@ class DataView(ft.View):
                 lista_txt_eventos.append(txt_evento)
 
             lista_containers.append(
-                self.add_dados_Linha(txt_data, txt_categoria, lista_txt_eventos)
+                # self.add_dados_Linha(txt_data, txt_categoria, lista_txt_eventos)
+                self.add_dados_Linha(txt_data, lista_txt_eventos)
+
             )
 
         return lista_containers
@@ -84,7 +86,7 @@ class DataView(ft.View):
     def add_dados_Linha(
         self,
         txt_data: ft.Text,
-        txt_categoria: ft.Text,
+        # txt_categoria: ft.Text,
         lista_txt_eventos: list[ft.Text],
     ) -> ft.Container:
 
@@ -96,7 +98,6 @@ class DataView(ft.View):
                 content=ft.Row(
                     controls=[
                         txt_data,
-                        txt_categoria,
                     ],
                     expand=True,
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
