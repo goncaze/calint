@@ -26,6 +26,8 @@ class MesCard(Cartao):
 
         self.ano = ano
         self.mes = mes
+        self.cor: set = set()
+        self.legendas: set = set()
         self.todas_datas: list[Data] = todas_datas 
         self.todas_dt_literal: list[str] = todas_dt_literal
         self.titulo_mes = f"{calendar.month_name[mes].capitalize()} de {ano}"
@@ -111,7 +113,10 @@ class MesCard(Cartao):
             self.lista_container_06
         ]
 
-
+        ###
+        # Atributo coluna para conter as cores e o evento 
+        #
+        self.coluna_de_eventos :ft.Column = ft.Column()
 
         self.preencher_dias()
 
@@ -173,20 +178,49 @@ class MesCard(Cartao):
             )      
         )
         
+    
+    def filtrar_linha_cor_legenda(self, lista_eventos: list[Evento])->None:
+        for evento in lista_eventos:
+            if evento.evento not in self.legendas:
+                # print(" def filtrar_linha_cor_legenda(self, lista_eventos: list[Evento])->None:")
+                self.legendas.add( evento.evento )
+                self.cor.add( evento.evento_categoria.cor )
+
+                cntn_cor = ft.Container( width = 30, height = 25, bgcolor = evento.evento_categoria.cor )
+                legenda = ft.Text(value=evento.evento)
+
+                # linha_cor_legenda = ft.Row( controls = [ cntn_cor, legenda ] )
+                self.coluna_de_eventos.controls.append( #ft.Text('Teste')
+                    # self.setar_linha_cor_legenda( evento.evento_categoria.cor, evento ) 
+                    ft.Row( controls = [ cntn_cor, legenda ] )
+
+                )
+                
+
+
+
+    def setar_linha_cor_legenda(self, cor: str = '#eee222', evento: str = 'Legenda')->ft.Row:
+        cntn_cor = ft.Container( width = 30, height = 25, bgcolor = cor )
+        legenda: str = evento
+
+        linha_cor_legenda = ft.Row( controls = [ cntn_cor, legenda ] )
+
+        return linha_cor_legenda
+
 
     def determinar_cor_data(self, dia: int)->str:    
-        # print(f"{self.todas_dt_literal = }")
-        # print(f"{len(self.todas_dt_literal) = }")
-        print(f"{dia = }")
-        print(f"{self.mes = }")
-        print(f"{self.ano = }")    
+        # # print(f"{self.todas_dt_literal = }")
+        # # print(f"{len(self.todas_dt_literal) = }")
+        # print(f"{dia = }")
+        # print(f"{self.mes = }")
+        # print(f"{self.ano = }")    
 
         cor = ""
         data_calendario = datetime.date(self.ano, self.mes, dia).strftime('%Y-%m-%d')
-        print("\n\n--------------")
-        print(f"\n\t\tdata_calendario") 
-        print(f"\t\t{data_calendario = }")    
-        print("--------------\n\n")
+        # print("\n\n--------------")
+        # print(f"\n\t\tdata_calendario") 
+        # print(f"\t\t{data_calendario = }")    
+        # print("--------------\n\n")
 
         if calendar.weekday(self.ano, self.mes, dia) in (5,6):
             # print("\n\n--------------")
@@ -195,14 +229,15 @@ class MesCard(Cartao):
             # print("--------------\n\n")
             cor = "#ea9999" 
         elif data_calendario in self.todas_dt_literal:
-            print("\n\n--------------")
-            print(f" elif data_calendario in self.todas_dt_literal: ")
-            print(f"{data_calendario = }")            
-            print(f"{data_calendario in self.todas_dt_literal = }")
-            print("--------------\n\n")
+            # print("\n\n--------------")
+            # print(f" elif data_calendario in self.todas_dt_literal: ")
+            # print(f"{data_calendario = }")            
+            # print(f"{data_calendario in self.todas_dt_literal = }")
+            # print("--------------\n\n")
 
             indice = self.todas_dt_literal.index(data_calendario)
             cor = self.todas_datas[indice].eventos[-1].evento_categoria.cor
+            self.filtrar_linha_cor_legenda(self.todas_datas[indice].eventos)
 
         return cor
 

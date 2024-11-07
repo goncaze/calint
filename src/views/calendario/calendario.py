@@ -22,19 +22,21 @@ class CalendarioView(ft.View):
         ) 
         
         for mes in range(1,13):
-            mes_Card = MesCard(self.page, self.dbs, 2024, mes, self.todas_datas, self.todas_dt_literal)
-            # print(f"{mes_Card.width = }")
+            mes_card = MesCard(self.page, self.dbs, 2024, mes, self.todas_datas, self.todas_dt_literal)
+            # print(f"{mes_card.width = }")
             self.lv_mes_horizontal.controls.append( 
                 ft.Container(
                     content=ft.Column(
                         controls=[
-                            mes_Card,
+                            mes_card,
                             ft.Container(
-                                bgcolor=ft.colors.TEAL_200, 
+                                content=mes_card.coluna_de_eventos,
+                                bgcolor="#F7F7F7", 
                                 expand=True, 
-                                content=ft.Text(value="Legendas"),  
-                                width=mes_Card.width,
-                                margin=0,                            
+                                # content=ft.Text(value="Legendas"),  
+                                width=mes_card.width,
+                                margin=0,      
+                                padding=ft.padding.all(20)                      
                             ),                                 
                         ]
                     )
