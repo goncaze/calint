@@ -5,7 +5,9 @@ from src.data.database_singleton import DataDBSingleton
 from pathlib import Path
 
 from src.views.data_views.data_view import DataView
-from views.data_views.BKP_selecionar_data_view import SelecionarDataView
+# from src.views.data_views.BKP_selecionar_data_view import SelecionarDataView
+from src.views.data_views.selecionar_data_view import SelecionarDataView
+
 
 from src.views.evento_categoria_views.categoria_evento_view import CategoriaEventoView
 from src.views.evento_categoria_views.categoria_evento_create_view import (
@@ -60,7 +62,7 @@ def main(page: ft.Page):
     # page.window_width = 380
     page.window.width = 360
     # page.window_height = 500  # 650
-    page.window.height = 680
+    page.window.height = 660
 
     navegador = Navegador(page)
 
