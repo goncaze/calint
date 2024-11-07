@@ -5,7 +5,7 @@ from src.data.database_singleton import DataDBSingleton
 from pathlib import Path
 
 from src.views.data_views.data_view import DataView
-from src.views.data_views.selecionar_data_view import SelecionarDataView
+from views.data_views.BKP_selecionar_data_view import SelecionarDataView
 
 from src.views.evento_categoria_views.categoria_evento_view import CategoriaEventoView
 from src.views.evento_categoria_views.categoria_evento_create_view import (
