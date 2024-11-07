@@ -96,7 +96,7 @@ class DataDB:
         self.dbs.executar_sql(sql, parametros)  # .rowcount
 
     # # -----------------------------------------------------------------------
-    # Select eventos de uma data específica
+    # Select ID de eventos de uma data específica
     ##
     def select_id_eventos_por_id_data(self, data: Data) -> list[int]:
 
@@ -116,6 +116,30 @@ class DataDB:
             lista_id_eventos.append(resultado[0])
 
         return lista_id_eventos
+
+    # # # -----------------------------------------------------------------------
+    # # Select EVENTOS de uma data específica
+    # ##
+    # def select_eventos_por_id_data(self, lista_id_eventos: list[int]) -> list[Evento]:
+
+    #     parametro: tuple = None
+
+    #     for id_evento in lista_id_eventos:
+    #         parametro = (id_evento,)
+    #         sql = "SELECT * FROM evento WHERE data_id = ?"
+    #     else:
+    #         return None
+
+    #     cursor = self.dbs.executar_sql(sql, parametro)
+
+    #     lista_eventos: list[Evento] = []
+
+    #     for resultado in cursor.fetchall():
+    #         evento = Evento()
+    #         lista_eventos.append(resultado[0])
+
+    #     return lista_eventos
+
 
     # # -----------------------------------------------------------------------
     # SELECT todas as DATAS
@@ -161,11 +185,13 @@ class DataDB:
         """
         sql: str = None
         parametros: tuple = None
-        # print(f"\n\n\t\t{data = }\n\n")
-        # print(f"\n\n\t\t {data.data is not None and data.data != "" = } \n\n")
+        # print(f"\n\n\t\t{data = }")
+        # print("\n\t\t{data.data is not None and data.data != ""}")
+        # print(f"\n\t\t{data.data is not None and data.data != ""} \n\n")
 
         if data.id is not None and data.id > 0:
-            # print("\n\n\t\t if data.id is not None and data.id > 0: \n\n")
+            # print("\n\n\t\t if data.id is not None and data.id > 0: ")
+            # print(f"\t\t {data.id is not None and data.id > 0} \n\n")
             parametros = (data.id,)
             # sql = "SELECT * FROM data WHERE id = ?"
             ############## # id, strftime('%d/%m/%Y', data) as data # #############
@@ -178,6 +204,8 @@ class DataDB:
                     id = ?
             """
         elif data.data is not None and data.data != "":
+            # print("\n\n\t\t QUASE LÁ ONDE DEVE ENTRAR '' ")
+            # print(f"\t\t {data.data is not None and data.data != ""} \n\n")            
             # parametros = (
             #     datetime.strftime(datetime.strptime(data.data, "%d/%m/%Y"), "%Y-%m-%d"),
             # )
@@ -191,23 +219,34 @@ class DataDB:
                 WHERE 
                     data = ?
             """
+            # print("{sql = }")
+            # print(f"{sql}")
+            # print(f"\n{data.data = }\n")
+
         else:
             return None
 
-        if sql:
-            cursor = self.dbs.executar_sql(sql, parametros)
+        # if sql is not None:
+        #     print("\n{sql is not None}")
+        #     print(f"{sql is not None}\n")
+        cursor = self.dbs.executar_sql(sql, parametros)
 
-            for registro in cursor:
-                data = Data(
-                    id=registro[0],
-                    # data=datetime.strftime(registro[1], "%d/%m/%Y"),
-                    data=registro[1],
-                    # data_categoria=self.dataCategoriaDB.select_data_categoria(
-                    #     registro[2]
-                    # ),
-                    eventos=self.select_eventos_por_data(registro[0]),
-                )
-                return data
+        for registro in cursor:
+            data = Data(
+                id=registro[0],
+                # data=datetime.strftime(registro[1], "%d/%m/%Y"),
+                data=registro[1],
+                # data_categoria=self.dataCategoriaDB.select_data_categoria(
+                #     registro[2]
+                # ),
+                eventos=self.select_eventos_por_data(registro[0]),
+            )
+            # print("\n\n\t\t ENTROU ONDE DEVE ENTRAR '' ")
+            # print(f"\t\t {data.id = } \n\n")  
+            # for evento in data.eventos:
+            #     print(evento)
+
+            return data
 
         return None
 

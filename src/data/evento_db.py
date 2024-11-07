@@ -149,11 +149,11 @@ class EventoDB:
     # # -----------------------------------------------------------------------
     # Select somente eventos relacionados a uma data específica
     ##
-    def select_evento_alguns(self, lista_ids: list[tuple]) -> list[Evento]:
+    def select_evento_alguns(self, lista_id_eventos: list[int]) -> list[Evento]:
 
         lista_evento: list[Evento] = []
 
-        for parametro in lista_ids:
+        for parametro in lista_id_eventos:
             # parametro = id
             sql = "SELECT * FROM evento WHERE id = ?"
 

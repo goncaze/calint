@@ -35,6 +35,16 @@ class SelecionarDataView(ft.View):
             alignment=ft.MainAxisAlignment.END
         )
 
+        ###
+        # atributo coluna para litar eventos da data selecionada
+        #
+        self.cln_listagem = ft.Column(        
+            # controls=[self.listar_eventos()],
+            scroll=ft.ScrollMode.ALWAYS,
+            expand=True,
+        )
+        
+
         self.controls = [
             ft.SafeArea(
                 # content = ft.Text(value="Selecionar data!")
@@ -46,17 +56,123 @@ class SelecionarDataView(ft.View):
                                 self.icb_data,
                             ],
                         ),
+                        self.cln_listagem,
                         self.linha_ttb,
                     ]   
                 )
             )
         ]
-        print("\n\n\n\t\t\t SELECIONAR DATA AQUI \n\n\n")
-        # self.update()
+
+
+    def listar_eventos(self) -> ft.ListView:
+        # Uma visualização em formato de lista
+        lw_lista = ft.ListView(
+            # Os itens serão organizados verticalmente
+            horizontal=False,
+            # Um espaçamento para componentes do entorno
+            spacing=20,
+            # Espessura do divisor entre os itens da ListView
+            # divider_thickness=1,
+        )
+
+        for item in self.carregar_dados():
+            lw_lista.controls.append(item)
+
+        lw_lista.controls.append(ft.Container(height=50))
+
+        return lw_lista
+
+
+
+    def carregar_dados(self) -> list[ft.Card]:
+        lista_cards: list[ft.Card] = []
+
+        self.data = self.data_db.select_uma_data(self.data)
+
+        if self.data:
+            for evento in self.data.eventos:
+                txt_evento = ft.Text(
+                    value=evento.evento,
+                    color=ft.colors.GREY_900,
+                )
+
+                lista_cards.append(                
+                    self.add_dados_Linha(txt_evento)
+                )
+
+        return lista_cards
+    
+
+
+    def add_dados_Linha(
+        self,        
+        txt_evento: ft.Text,
+    ) -> ft.Card:
+
+        # coluna = ft.Column(spacing=1)
+        # coluna.controls.append(linha_categoria)
+
+        # coluna.controls.append(
+        #     ft.Container(
+        #         content=ft.Row(
+        #             controls=[
+        #                 txt_data,
+        #             ],
+        #             expand=True,
+        #             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+        #         ),
+        #         bgcolor="#00ac41",
+        #         padding=ft.padding.only(left=10, right=10),
+        #         margin=ft.margin.only(top=0, bottom=10, right=0, left=0),
+        #         height=30,
+        #         border_radius=ft.border_radius.all(15),
+        #         gradient=ft.LinearGradient(colors=["#00ac41", "#cbff7f"]),
+        #     )
+        # )
+
+        # if len(lista_txt_eventos) > 0:
+        #     coluna.controls.append(
+        #         ft.Container(
+        #             content=ft.Text(
+        #                 weight=ft.FontWeight.BOLD,
+        #                 value="Eventos:",
+        #                 color=ft.colors.BLUE_GREY_900,
+        #                 # color=ft.colors.AMBER,
+        #             ),
+        #             margin=ft.margin.only(left=10, right=10),
+        #         )
+        #     )
+
+        #     for txt_evento in lista_txt_eventos:
+        #         coluna.controls.append(
+        #             ft.Container(
+        #                 content=txt_evento,
+        #                 margin=ft.margin.only(left=10, right=10),
+        #             )
+        #         )
+
+        # SUBSTITUIR POR CARD
+        # container_dados_data = ft.Container(
+        card_dados_data = ft.Card(
+            content=txt_evento,
+            margin=ft.margin.only(right=20),
+            color=ft.colors.AMBER_200,
+        )
+
+        return card_dados_data
+
+
+
 
     def change_date(self, e: ft.ControlEvent):
+        # print("\n\n\t\t def change_date(self, e: ft.ControlEvent): \n\n")
         self.ttf_data.value = self.dtpkr_data.value.strftime('%d-%m-%Y')
+        self.data = Data(data=self.dtpkr_data.value.strftime('%Y-%m-%d'))
+        # print(f"{self.data = }\n\n")
+        self.cln_listagem.controls=[self.listar_eventos()]
         self.ttf_data.update()
+        self.cln_listagem.update()
+
 
 
     def validar(self) -> bool:
