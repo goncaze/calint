@@ -128,14 +128,15 @@ class DataAddEventoView(ft.View):
         self.page.close(self.dlg_apos_atualizar)
 
     def limpar_geral(self):
+        self.data = Data()
         self.ttf_data.value = ""
         self.limpar_coluna_eventos()
 
     def change_date(self, e: ft.ControlEvent):
-        # print("\n\n\t\t def change_date(self, e: ft.ControlEvent): \n\n")
+        print("\n\n\t\t def change_date(self, e: ft.ControlEvent): \n\n")
         self.ttf_data.value = self.dtpkr_data.value.strftime('%d-%m-%Y')
         self.data = Data(data=self.dtpkr_data.value.strftime('%Y-%m-%d'))
-        # print(f"{self.data = }\n\n")
+        print(f"{self.data = }\n\n")
         # self.cln_listagem.controls=[self.listar_eventos()]
         self.limpar_coluna_eventos()
         self.buscar_dados_data()
@@ -209,7 +210,6 @@ class DataAddEventoView(ft.View):
             # self.data.data_categoria = self.categoria_data_selecionada()
             self.data.eventos = self.eventos_selecionados()
             self.data_db.update_data_evento(self.data)
-            self.data = Data()
             self.limpar_geral()
             self.mensagem_dlg.value = "Os dados foram atualizados!"
             self.page.open(self.dlg_apos_atualizar)            
