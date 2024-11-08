@@ -39,11 +39,14 @@ class SelecionarDataView(ft.View):
         # atributo coluna para litar eventos da data selecionada
         #
         self.cln_listagem = ft.Column(        
-            # controls=[self.listar_eventos()],
             scroll=ft.ScrollMode.ALWAYS,
             expand=True,
         )
         
+        self.floating_action_button = ft.FloatingActionButton(
+            icon=ft.icons.ADD,
+            on_click=lambda _: self.page.go("/data_add_evento"),
+        )
 
         self.controls = [
             ft.SafeArea(

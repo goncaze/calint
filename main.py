@@ -7,7 +7,7 @@ from pathlib import Path
 from src.views.data_views.data_view import DataView
 # from src.views.data_views.BKP_selecionar_data_view import SelecionarDataView
 from src.views.data_views.selecionar_data_view import SelecionarDataView
-
+from src.views.data_views.data_add_evento_view import DataAddEventoView
 
 from src.views.evento_categoria_views.categoria_evento_view import CategoriaEventoView
 from src.views.evento_categoria_views.categoria_evento_create_view import (
@@ -112,6 +112,10 @@ def main(page: ft.Page):
 
         elif rota == "/selecionar_data":
             page.views.append(SelecionarDataView(page, dbs))
+
+        elif rota == "/data_add_evento":
+            print("INDO PARA data_add_evento")
+            page.views.append(DataAddEventoView(page, dbs))
 
         elif rota == "/data_reload":
             list_size = len(page.views)

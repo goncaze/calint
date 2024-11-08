@@ -28,11 +28,11 @@ class Navegador:
                     selected_icon_content=ft.Icon(ft.icons.CALENDAR_MONTH_OUTLINED),
                 ),
                 ft.Divider(thickness=2),
-                ft.NavigationDrawerDestination(
-                    icon_content=ft.Icon(ft.icons.CALENDAR_TODAY_OUTLINED),
-                    label="Categoria Datas",
-                    selected_icon=ft.icons.MAIL,
-                ),
+                # ft.NavigationDrawerDestination(
+                #     icon_content=ft.Icon(ft.icons.CALENDAR_TODAY_OUTLINED),
+                #     label="Categoria Datas",
+                #     selected_icon=ft.icons.MAIL,
+                # ),
                 ft.NavigationDrawerDestination(
                     icon_content=ft.Icon(ft.icons.EVENT_OUTLINED),
                     label="Eventos",
@@ -63,17 +63,21 @@ class Navegador:
 
         match e.control.selected_index:
             case 0:
-                self.page.go("/datas")
+                # self.page.go("/datas")
+                self.page.go("/data_add_evento")
+            # case 1:
+            #     self.page.go("/categoria_data")
             case 1:
-                self.page.go("/categoria_data")
-            case 2:
                 self.page.go("/eventos")
-            case 3:
+            case 2:
                 self.page.go("/categoria_evento")
-            case 4:
+            case 3:
                 self.page.go("/ano_letivo")
-            case 5:
+            case 4:
                 self.page.go("/calendario")
+
+
+
 
     def aux_page_go(self, url: str):
 
