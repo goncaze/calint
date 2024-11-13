@@ -21,6 +21,17 @@ class DataDBSingleton:
 
         return self.cursor
 
+    # -----------------------------------------------------------------------
+    def executar_sql_muitos(self, sql: str, parametros: list[tuple]) -> sqlite3.Cursor:
+        # try:
+        with sqlite3.connect(self.DB_FILE) as self.conexao:
+            self.cursor = self.conexao.cursor()
+            self.cursor.execute("PRAGMA foreign_keys = ON")
+            self.cursor.executemany(sql, parametros)
+            self.conexao.commit()
+
+        return self.cursor
+
     # except sqlite3.Error as e:
     #     print("\n\n \t\t ERROR CPAPTURADO \n")
     #     print(f"{e = }")

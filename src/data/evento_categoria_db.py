@@ -8,14 +8,12 @@ class EventoCategoriaDB:
         self.dbs = dbs
         self.criar_tabela_evento_categoria()
 
-
     ##
     # EXCLUIR TABELAS
     ##
     def excluir_tabela(self) -> None:
         excluir_tabela = "DROP TABLE IF EXISTS evento_categoria"
         self.dbs.executar_sql(excluir_tabela)
-
 
     ##
     # CRIAR TABELAS
@@ -43,10 +41,10 @@ class EventoCategoriaDB:
 
         for registro in resultado:
             evento_categoria = EventoCategoria(
-                id = registro[0], 
-                categoria = registro[1], 
-                descricao = registro[2], 
-                cor = registro[3]
+                id=registro[0],
+                categoria=registro[1],
+                descricao=registro[2],
+                cor=registro[3],
             )
             lista_evento_categoria.append(evento_categoria)
 
@@ -68,10 +66,10 @@ class EventoCategoriaDB:
         registro = cursor.fetchone()
 
         evento_categoria = EventoCategoria(
-            id = registro[0], 
-            categoria = registro[1], 
-            descricao = registro[2], 
-            cor = registro[3]
+            id=registro[0],
+            categoria=registro[1],
+            descricao=registro[2],
+            cor=registro[3],
         )
 
         return evento_categoria
@@ -79,7 +77,9 @@ class EventoCategoriaDB:
     # # -----------------------------------------------------------------------
     # UPDATE registro na tabela evento_categoria
     ##
-    def update_evento_categoria(self, id: int, categoria: str, descricao: str, cor: str):
+    def update_evento_categoria(
+        self, id: int, categoria: str, descricao: str, cor: str
+    ):
 
         parametros = (categoria, descricao, cor, id)
 
@@ -108,7 +108,7 @@ class EventoCategoriaDB:
     # # -----------------------------------------------------------------------
     # Iserir dados na tabela evento_categoria
     ##
-    def insert_evento_categoria(self, evento_categoria: EventoCategoria)->int:
+    def insert_evento_categoria(self, evento_categoria: EventoCategoria) -> int:
 
         params = (
             evento_categoria.categoria,
@@ -117,7 +117,7 @@ class EventoCategoriaDB:
                 if evento_categoria.descricao != ""
                 else "Não cadastrada"
             ),
-            evento_categoria.cor
+            evento_categoria.cor,
         )
 
         novo_evento_categoria = """
@@ -128,5 +128,9 @@ class EventoCategoriaDB:
 
         cursor = self.dbs.executar_sql(novo_evento_categoria, params)  # .rowcount
 
-        return cursor.lastrowid
+        id = cursor.lastrowid
 
+        print("id = cursor.lastrowid")
+        print(f"{id = }")
+        # return cursor.lastrowid
+        return id
