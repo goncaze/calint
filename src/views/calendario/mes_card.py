@@ -235,10 +235,10 @@ class MesCard(Cartao):
 
             indice = self.todas_dt_literal.index(data_calendario)
 
-            print("if self.todas_datas[indice].eventos:")
-            print(f" {len(self.todas_datas[indice].eventos) = }")
-            for ev in self.todas_datas[indice].eventos:
-                print(f"{ev = }")
+            # print("if self.todas_datas[indice].eventos:")
+            # print(f" {len(self.todas_datas[indice].eventos) = }")
+            # for ev in self.todas_datas[indice].eventos:
+            #     print(f"{ev = }")
 
             if self.todas_datas[indice].eventos:
 

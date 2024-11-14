@@ -106,12 +106,12 @@ class DataDB:
         lista_id_eventos_atual = self.select_id_eventos_por_id_data(data)
 
         nova_lista_id_eventos: list[int] = []
-        print("\n\t\t DATA")
-        print(f"{data = } \n\n")
+        # print("\n\t\t DATA")
+        # print(f"{data = } \n\n")
 
         for evento in data.eventos:
-            print("----  ----  ----  -----  ----  -----")
-            print(f"{evento = }")
+            # print("----  ----  ----  -----  ----  -----")
+            # print(f"{evento = }")
             nova_lista_id_eventos.append(evento.id)
 
         # print(f"\n\n {type(lista_id_eventos_atual) = }")
@@ -119,11 +119,11 @@ class DataDB:
         # print(f"{lista_id_eventos_atual == None }")
         # print("\n{lista_id_eventos_atual is not None }")
         # print(f"{lista_id_eventos_atual is not None }")
-        print("\n\n")
+        # print("\n\n")
 
         if lista_id_eventos_atual is not None:
-            print("\n\t{lista_id_eventos_atual is not None }")
-            print(f"\t\t{lista_id_eventos_atual is not None }")
+            # print("\n\t{lista_id_eventos_atual is not None }")
+            # print(f"\t\t{lista_id_eventos_atual is not None }")
             for id_evento_atual in lista_id_eventos_atual:
                 if id_evento_atual not in nova_lista_id_eventos:
                     self.delete_evento_data(data, id_evento_atual)
@@ -134,10 +134,10 @@ class DataDB:
 
         else:
             for evento_novo_id in nova_lista_id_eventos:
-                print("-----------------------------")
-                print(f"{data.id = }")
-                print(f"{evento_novo_id = }")
-                print("-----------------------------")
+                # print("-----------------------------")
+                # print(f"{data.id = }")
+                # print(f"{evento_novo_id = }")
+                # print("-----------------------------")
                 self.insert_eventos_data(data.id, evento_novo_id)
 
     # # -----------------------------------------------------------------------
