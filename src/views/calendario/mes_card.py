@@ -177,7 +177,7 @@ class MesCard(Cartao):
             ),
         )
 
-    def filtrar_linha_cor_legenda(self, lista_eventos: list[Evento]) -> None:
+    def filtrar_linha_cor_legenda(self, dia: int, lista_eventos: list[Evento]) -> None:
         for evento in lista_eventos:
             if evento.evento not in self.legendas:
                 # print(" def filtrar_linha_cor_legenda(self, lista_eventos: list[Evento])->None:")
@@ -185,7 +185,11 @@ class MesCard(Cartao):
                 self.cor.add(evento.evento_categoria.cor)
 
                 cntn_cor = ft.Container(
-                    width=30, height=25, bgcolor=evento.evento_categoria.cor
+                    width=30,
+                    height=25,
+                    bgcolor=evento.evento_categoria.cor,
+                    content=ft.Text(value=dia),
+                    alignment=ft.alignment.center,
                 )
                 legenda = ft.Text(value=evento.evento)
 
@@ -243,7 +247,7 @@ class MesCard(Cartao):
             if self.todas_datas[indice].eventos:
 
                 cor = self.todas_datas[indice].eventos[-1].evento_categoria.cor
-                self.filtrar_linha_cor_legenda(self.todas_datas[indice].eventos)
+                self.filtrar_linha_cor_legenda(dia, self.todas_datas[indice].eventos)
 
         return cor
 

@@ -140,6 +140,18 @@ class DataDB:
                 # print("-----------------------------")
                 self.insert_eventos_data(data.id, evento_novo_id)
 
+    ###
+    # Inserir muitos dados na tabela data_evento
+    #
+    def preencher_data_evento_muitos(self, parametros: list) -> None:
+        sql = """
+            INSERT INTO 
+                evento_data(data_id, evento_id) 
+            values(?,?)
+        """
+
+        self.dbs.executar_sql_muitos(sql, parametros)
+
     # # -----------------------------------------------------------------------
     # DELETAR registro na tabela data
     ##
