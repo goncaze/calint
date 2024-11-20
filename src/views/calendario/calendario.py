@@ -3,6 +3,7 @@ from datetime import datetime
 from src.views.calendario.mes_card import MesCard
 from src.data.database_singleton import DataDBSingleton
 from src.data.data_db import DataDB
+import calendar
 
 
 class CalendarioView(ft.View):
@@ -23,7 +24,9 @@ class CalendarioView(ft.View):
             horizontal=True,
         )
 
-        for ano in range(self.hoje.year - 1, self.hoje.year + 2):
+        self.ano = self.hoje.year - 1
+        for ano in range(self.hoje.year, self.hoje.year + 2):
+            self.ano += 1
             for mes in range(1, 13):
                 mes_card = MesCard(
                     self.page,
@@ -33,9 +36,16 @@ class CalendarioView(ft.View):
                     self.todas_datas,
                     self.todas_dt_literal,
                 )
-                # print(f"{mes_card.width = }")
+                # self.aux_i_mes += 1
+                # print("self.aux_i_mes")
+                # print(f"{self.aux_i_mes = }")
+                # print("key=str(mes + self.aux_i_mes)")
+                # print(f"{mes + self.aux_i_mes = }")
+                # print(f"{calendar.month_name[mes] + str(self.ano) = }")
+
                 self.lv_mes_horizontal.controls.append(
                     ft.Container(
+                        key=str(calendar.month_name[mes] + str(self.ano)), # + self.aux_i_mes),
                         content=ft.Column(
                             controls=[
                                 mes_card,
@@ -78,6 +88,8 @@ class CalendarioView(ft.View):
         #     )
 
         self.controls.append(ft.SafeArea(content=self.lv_mes_horizontal, expand=True))
+        # page.add(self.lv_mes_horizontal)
+        # self.lv_mes_horizontal.scroll_to(key='março2024')
 
     def extrair_dt_literal(self) -> list[str]:
         lista_data: list[str] = []

@@ -266,7 +266,9 @@ def main(page: ft.Page):
                     break
 
             if not esta_em_pageviews:
-                page.views.append(CalendarioView(page, dbs))
+                calendario_view = CalendarioView(page, dbs)
+                page.views.append(calendario_view)  
+                # calendario_view.lv_mes_horizontal.scroll_to(key='março2024')
             
             
 

@@ -178,17 +178,22 @@ class MesCard(Cartao):
         )
 
     def filtrar_linha_cor_legenda(self, dia: int, lista_eventos: list[Evento]) -> None:
+        # Para cada evento na lista de eventos
         for evento in lista_eventos:
+            # Se um determinado evento não está no set de legendas
             if evento.evento not in self.legendas:
                 # print(" def filtrar_linha_cor_legenda(self, lista_eventos: list[Evento])->None:")
+                # Incluir o determinado evento no set de legendas
                 self.legendas.add(evento.evento)
-                self.cor.add(evento.evento_categoria.cor)
-
+                # Por conseguinte, incluir a cor do evento no set de cores
+                # self.cor.add(evento.evento_categoria.cor)
+                # Container de cor para a legenda do evento
                 cntn_cor = ft.Container(
                     width=30,
                     height=25,
                     bgcolor=evento.evento_categoria.cor,
-                    content=ft.Text(value=dia),
+                    # Preciso evitar a inclusão do dia caso exista mais da mesma categoria
+                    content=ft.Text(value = "" if evento.evento in ('Dia letivo', 'Férias') else dia),
                     alignment=ft.alignment.center,
                 )
                 legenda = ft.Text(value=evento.evento)
@@ -198,6 +203,21 @@ class MesCard(Cartao):
                     # self.setar_linha_cor_legenda( evento.evento_categoria.cor, evento )
                     ft.Row(controls=[cntn_cor, legenda])
                 )
+
+
+    def contar_eventos(self, evento: Evento, lista_eventos: list[Evento]) -> bool:
+        contagem: int = 0
+
+        for item_evento in lista_eventos: 
+            print(f"{item_evento.evento = }")            
+            if item_evento.evento == evento.evento:
+                contagem += 1 
+            print(f"{evento.evento = } \t| {contagem = }")
+            
+        # print(f"{item_evento.evento = }")
+        # print(f"{evento.evento = } \t| {contagem = }")
+        return contagem == 1
+
 
     def setar_linha_cor_legenda(
         self, cor: str = "#eee222", evento: str = "Legenda"
