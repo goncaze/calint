@@ -9,6 +9,7 @@ class EventoView(ft.View):
     def __init__(self, page: ft.Page, dbs: DataDBSingleton):
         super().__init__()
         self.route = "/eventos"
+        self.bgcolor = ft.colors.WHITE
         self.appbar = ft.AppBar(title=ft.Text("Eventos"))
         self.page = page
         self.evento_db = EventoDB(dbs)

@@ -6,7 +6,7 @@ class CategoriaEventoCRUDView(ft.View):
 
     def __init__(self):
         super().__init__()
-
+        self.bgcolor = ft.colors.WHITE
         self.ttf_categoria = ft.TextField(
             label="Categoria",
             hint_text="Categoria",

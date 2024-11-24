@@ -9,6 +9,7 @@ class CategoriaEventoView(ft.View):
     def __init__(self, page: ft.Page, dbs: DataDBSingleton):
         super().__init__()
         self.route = "/categoria_evento"
+        self.bgcolor = ft.colors.WHITE
         self.appbar = ft.AppBar(title=ft.Text("Categorias de evento"))
         self.page = page
         self.evento_categoria_db = EventoCategoriaDB(dbs)
@@ -62,7 +63,7 @@ class CategoriaEventoView(ft.View):
             )
 
             txt_cor = ft.Text(
-                value = eventoCategoria.cor,
+                value=eventoCategoria.cor,
             )
 
             lista_containers.append(
@@ -117,13 +118,13 @@ class CategoriaEventoView(ft.View):
                     value="Cor:",
                 ),
                 ft.Container(
-                    bgcolor = txt_cor.value, #"#a233c4", # 
+                    bgcolor=txt_cor.value,  # "#a233c4", #
                     width=50,
                     height=15,
-                ),                
+                ),
             ],
             spacing=5,
-        )        
+        )
 
         coluna = ft.Column(controls=[linha1, linha2, linha3], spacing=1)
 

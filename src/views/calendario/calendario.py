@@ -11,6 +11,8 @@ class CalendarioView(ft.View):
     def __init__(self, page: ft.Page, dbs: DataDBSingleton):
         super().__init__()
         self.page = page
+        self.bgcolor = ft.colors.WHITE
+        self.scroll = ft.ScrollMode.ALWAYS
         self.appbar = ft.AppBar(title=ft.Text("Calendário acadêmico"))
         self.dbs = dbs
         self.data_db = DataDB(self.dbs)
@@ -21,7 +23,7 @@ class CalendarioView(ft.View):
         self.lv_mes_horizontal = ft.ListView(
             spacing=10,
             padding=20,
-            horizontal=True,
+            # horizontal=True,
         )
 
         self.ano = self.hoje.year - 1
@@ -36,16 +38,12 @@ class CalendarioView(ft.View):
                     self.todas_datas,
                     self.todas_dt_literal,
                 )
-                # self.aux_i_mes += 1
-                # print("self.aux_i_mes")
-                # print(f"{self.aux_i_mes = }")
-                # print("key=str(mes + self.aux_i_mes)")
-                # print(f"{mes + self.aux_i_mes = }")
-                # print(f"{calendar.month_name[mes] + str(self.ano) = }")
+
+                print(calendar.month_name[mes] + str(self.ano))
 
                 self.lv_mes_horizontal.controls.append(
                     ft.Container(
-                        key=str(calendar.month_name[mes] + str(self.ano)), # + self.aux_i_mes),
+                        key=str(calendar.month_name[mes] + str(self.ano)),
                         content=ft.Column(
                             controls=[
                                 mes_card,
@@ -53,43 +51,41 @@ class CalendarioView(ft.View):
                                     content=mes_card.coluna_de_eventos,
                                     bgcolor="#F7F7F7",
                                     expand=True,
-                                    # content=ft.Text(value="Legendas"),
                                     width=mes_card.width,
                                     margin=0,
                                     padding=ft.padding.all(20),
                                 ),
                             ]
-                        )
+                        ),
                     )
                 )
 
-        # for mes in range(1, 13):
-        #     mes_card = MesCard(
-        #         self.page, self.dbs, 2024, mes, self.todas_datas, self.todas_dt_literal
-        #     )
-        #     # print(f"{mes_card.width = }")
-        #     self.lv_mes_horizontal.controls.append(
-        #         ft.Container(
-        #             content=ft.Column(
-        #                 controls=[
-        #                     mes_card,
-        #                     ft.Container(
-        #                         content=mes_card.coluna_de_eventos,
-        #                         bgcolor="#F7F7F7",
-        #                         expand=True,
-        #                         # content=ft.Text(value="Legendas"),
-        #                         width=mes_card.width,
-        #                         margin=0,
-        #                         padding=ft.padding.all(20),
-        #                     ),
-        #                 ]
-        #             )
-        #         )
-        #     )
+        self.controls.append(
+            ft.SafeArea(
+                content=ft.Column(
+                    controls=[
+                        ft.IconButton(
+                            icon=ft.icons.ABC,
+                            on_click=self.reposicionar,
+                        ),
+                        self.lv_mes_horizontal,
+                    ]
+                ),
+                expand=True,
+            )
+        )
 
-        self.controls.append(ft.SafeArea(content=self.lv_mes_horizontal, expand=True))
-        # page.add(self.lv_mes_horizontal)
-        # self.lv_mes_horizontal.scroll_to(key='março2024')
+        # self.lv_mes_horizontal.scroll_to(key="janeiro2025")
+
+    def reposicionar(self, e):
+        self.lv_mes_horizontal.scroll_to(key="janeiro2025")
+        self.update()
+        print("func")
+
+    def reposicionar_auto(self):
+        self.lv_mes_horizontal.scroll_to(key="janeiro2025")
+        self.update()
+        print("func")
 
     def extrair_dt_literal(self) -> list[str]:
         lista_data: list[str] = []
