@@ -1,4 +1,5 @@
 import flet as ft
+
 import datetime
 import calendar
 from src.views.calendario.cartao import Cartao
@@ -6,8 +7,6 @@ from src.data.data_db import DataDB
 from src.data.database_singleton import DataDBSingleton
 from src.modelo.data import Data
 from src.modelo.evento import Evento
-
-# from src.modelo.evento_categoria import EventoCategoria
 
 
 class MesCard(Cartao):
@@ -23,7 +22,8 @@ class MesCard(Cartao):
     ):
         super().__init__()
         self.page = page
-        self.page.expand = False
+        self.expand = True
+        # self.page.expand = False
         self.width = 350
 
         self.ano = ano
@@ -31,7 +31,10 @@ class MesCard(Cartao):
         self.legendas: set = set()
         self.todas_datas: list[Data] = todas_datas
         self.todas_dt_literal: list[str] = todas_dt_literal
-        self.titulo_mes = f"{calendar.month_name[mes].capitalize()} de {ano}"
+        self.meses = ['','Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+                      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+        self.titulo_mes = f"{self.meses[mes]} de {ano}"
+
 
         self.obj_calendar_d0 = calendar.Calendar(firstweekday=6)
         # obj_calendar_d1 = calendar.Calendar(firstweekday=1)
@@ -49,6 +52,7 @@ class MesCard(Cartao):
                 alignment=ft.alignment.center,
                 bgcolor="#429629",  # ft.colors.BLUE_100,
                 border=ft.border.all(width=1, color=ft.colors.GREY_300),
+                expand=True,
             )
         ]
         self.lista_container_01 = [
@@ -57,6 +61,7 @@ class MesCard(Cartao):
                 alignment=ft.alignment.center,
                 bgcolor="#429629",  # ft.colors.BLUE_100,
                 border=ft.border.all(width=1, color=ft.colors.GREY_300),
+                expand=True,
             )
         ]
         self.lista_container_02 = [
@@ -65,6 +70,7 @@ class MesCard(Cartao):
                 alignment=ft.alignment.center,
                 bgcolor="#429629",  # ft.colors.BLUE_100,
                 border=ft.border.all(width=1, color=ft.colors.GREY_300),
+                expand=True,
             )
         ]
         self.lista_container_03 = [
@@ -73,6 +79,7 @@ class MesCard(Cartao):
                 alignment=ft.alignment.center,
                 bgcolor="#429629",  # ft.colors.BLUE_100,
                 border=ft.border.all(width=1, color=ft.colors.GREY_300),
+                expand=True,
             )
         ]
         self.lista_container_04 = [
@@ -81,6 +88,7 @@ class MesCard(Cartao):
                 alignment=ft.alignment.center,
                 bgcolor="#429629",  # ft.colors.BLUE_100,
                 border=ft.border.all(width=1, color=ft.colors.GREY_300),
+                expand=True,
             )
         ]
         self.lista_container_05 = [
@@ -89,6 +97,7 @@ class MesCard(Cartao):
                 alignment=ft.alignment.center,
                 bgcolor="#429629",  # ft.colors.BLUE_100,
                 border=ft.border.all(width=1, color=ft.colors.GREY_300),
+                expand=True,
             )
         ]
         self.lista_container_06 = [
@@ -97,6 +106,7 @@ class MesCard(Cartao):
                 alignment=ft.alignment.center,
                 bgcolor="#429629",  # ft.colors.BLUE_100,
                 border=ft.border.all(width=1, color=ft.colors.GREY_300),
+                expand=True,
             )
         ]
 
@@ -125,34 +135,39 @@ class MesCard(Cartao):
         # As colunas para cada dia da semana contendo os dias
         # do mês que estão nas listas de conteiners.
         #
-        self.coluna_00 = ft.Column(self.lista_container_00, expand=True)
-        self.coluna_01 = ft.Column(self.lista_container_01, expand=True)
-        self.coluna_02 = ft.Column(self.lista_container_02, expand=True)
-        self.coluna_03 = ft.Column(self.lista_container_03, expand=True)
-        self.coluna_04 = ft.Column(self.lista_container_04, expand=True)
-        self.coluna_05 = ft.Column(self.lista_container_05, expand=True)
-        self.coluna_06 = ft.Column(self.lista_container_06, expand=True)
+        self.coluna_00 = ft.Column(self.lista_container_00, expand=True, spacing=1)
+        self.coluna_01 = ft.Column(self.lista_container_01, expand=True, spacing=1)
+        self.coluna_02 = ft.Column(self.lista_container_02, expand=True, spacing=1)
+        self.coluna_03 = ft.Column(self.lista_container_03, expand=True, spacing=1)
+        self.coluna_04 = ft.Column(self.lista_container_04, expand=True, spacing=1)
+        self.coluna_05 = ft.Column(self.lista_container_05, expand=True, spacing=1)
+        self.coluna_06 = ft.Column(self.lista_container_06, expand=True, spacing=1)
 
-        ###
-        # Uma Row para agrupar as colnas antes de incluir no Card.
-        #
-        self.linha: ft.Row = ft.Row(
-            controls=[
-                self.coluna_00,
-                self.coluna_01,
-                self.coluna_02,
-                self.coluna_03,
-                self.coluna_04,
-                self.coluna_05,
-                self.coluna_06,
-            ]
-        )
+        # ###
+        # # Uma Row para agrupar as colnas antes de incluir no Card.
+        # #
+        # self.linha: ft.Row = ft.Row(
+        #     spacing=0,
+        #     controls=[
+        #         self.coluna_00,
+        #         self.coluna_01,
+        #         self.coluna_02,
+        #         self.coluna_03,
+        #         self.coluna_04,
+        #         self.coluna_05,
+        #         self.coluna_06,
+        #     ]
+        # )
 
         self.content = ft.Container(
-            margin=10,
+            expand=True,
+            margin=5,
+            padding=0,            
             content=ft.Column(
+                spacing=0,
                 controls=[
                     ft.Row(
+                        spacing=0,
                         controls=[
                             ft.Container(
                                 content=ft.Text(value=self.titulo_mes),
@@ -162,6 +177,7 @@ class MesCard(Cartao):
                         ],
                     ),
                     ft.Row(
+                        spacing=0,
                         vertical_alignment=ft.CrossAxisAlignment.START,
                         controls=[
                             self.coluna_00,

@@ -21,8 +21,9 @@ class CalendarioView(ft.View):
         self.hoje = datetime.now().date()
 
         self.lv_mes_horizontal = ft.ListView(
-            spacing=10,
-            padding=20,
+            spacing=2,
+            padding=2,
+            expand=True,
             # horizontal=True,
         )
 
@@ -52,8 +53,8 @@ class CalendarioView(ft.View):
                                     bgcolor="#F7F7F7",
                                     expand=True,
                                     width=mes_card.width,
-                                    margin=0,
-                                    padding=ft.padding.all(20),
+                                    margin=2,
+                                    padding=ft.padding.all(2),
                                 ),
                             ]
                         ),
@@ -63,6 +64,7 @@ class CalendarioView(ft.View):
         self.controls.append(
             ft.SafeArea(
                 content=ft.Column(
+                    # expand=True,
                     controls=[
                         ft.IconButton(
                             icon=ft.icons.ABC,

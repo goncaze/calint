@@ -33,7 +33,7 @@ from src.views.evento_views.evento_edit_view import EventoEditView
 from src.views.calendario.calendario import CalendarioView
 from src.views.navegacao import Navegador
 
-locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
+# locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 
 ROOT_DIR = Path(__file__).parent
 DB_NAME = "calendario_db.sqlite3"
