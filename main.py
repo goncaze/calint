@@ -81,8 +81,8 @@ class App:
     # Rotas para views e appbar
     ##
     def route_change(self, route: ft.RouteChangeEvent):
-        print(f"\n======= def route_change(route: ft.RouteChangeEvent): =======\n")
-        print(f"\nENTRADA:\n{self.page.views = }\n")
+        # print(f"\n======= def route_change(route: ft.RouteChangeEvent): =======\n")
+        # print(f"\nENTRADA:\n{self.page.views = }\n")
 
         rota: str = route.route
 
@@ -125,7 +125,7 @@ class App:
             self.page.views.append(SelecionarDataView(self.page, self.dbs))
 
         elif rota == "/data_add_evento":
-            print("INDO PARA data_add_evento")
+            # print("INDO PARA data_add_evento")
             self.page.views.append(DataAddEventoView(self.page, self.dbs))
 
         elif rota == "/data_reload":
@@ -197,7 +197,7 @@ class App:
             rota.split("__-__")[0] == "/evento_edit"
             and self.page.views[-1].route != "/evento_edit"
         ):
-            print(f"\n\n {rota = } \n\n")
+            # print(f"\n\n {rota = } \n\n")
             self.page.views.append(
                 EventoEditView(int(rota.split("__-__")[1]), self.page, self.dbs)
             )
@@ -283,7 +283,12 @@ class App:
             if not esta_em_pageviews:
                 calendario_view = CalendarioView(self.page, self.dbs)
                 self.page.views.append(calendario_view)
-                # calendario_view.reposicionar_auto()
+                
+                self.page.add(
+                    calendario_view
+                )
+                calendario_view.reposicionar_auto()
+                # calendario_view.scroll_to(key="janeiro2025")
 
         self.page.update()
 

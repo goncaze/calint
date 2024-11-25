@@ -39,7 +39,7 @@ class CalendarioView(ft.View):
                     self.todas_dt_literal,
                 )
 
-                print(calendar.month_name[mes] + str(self.ano))
+                # print(calendar.month_name[mes] + str(self.ano))
 
                 self.lv_mes_horizontal.controls.append(
                     ft.Container(
@@ -75,17 +75,19 @@ class CalendarioView(ft.View):
             )
         )
 
-        # self.lv_mes_horizontal.scroll_to(key="janeiro2025")
-
     def reposicionar(self, e):
         self.lv_mes_horizontal.scroll_to(key="janeiro2025")
-        self.update()
-        print("func")
+        # self.update()
+        # print("func")
 
     def reposicionar_auto(self):
-        self.lv_mes_horizontal.scroll_to(key="janeiro2025")
-        self.update()
-        print("func")
+        self.lv_mes_horizontal.scroll_to(
+            key=str(
+                calendar.month_name[self.hoje.month] + str(self.hoje.year)
+            )
+        )
+        # self.update()
+        # print(f"{calendar.month_name[self.hoje.month] + str(self.hoje.year) = }")
 
     def extrair_dt_literal(self) -> list[str]:
         lista_data: list[str] = []
