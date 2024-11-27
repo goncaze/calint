@@ -246,17 +246,20 @@ class MesCard(Cartao):
         cor = ""
         data_calendario = datetime.date(self.ano, self.mes, dia).strftime("%Y-%m-%d")
 
-        if calendar.weekday(self.ano, self.mes, dia) in (5, 6):
+        # if calendar.weekday(self.ano, self.mes, dia) in (5, 6):
+        if calendar.weekday(self.ano, self.mes, dia) == 6:
             cor = "#ea9999"
 
         elif data_calendario in self.todas_dt_literal:
-
             indice = self.todas_dt_literal.index(data_calendario)
 
             if self.todas_datas[indice].eventos:
 
                 cor = self.todas_datas[indice].eventos[-1].evento_categoria.cor
                 self.filtrar_linha_cor_legenda(dia, self.todas_datas[indice].eventos)
+
+            elif calendar.weekday(self.ano, self.mes, dia) == 5:
+                cor = "#ea9999" 
 
         return cor
 
