@@ -10,7 +10,7 @@ class EventoEditView(EventoCRUDView):
     def __init__(self, id: int, page: ft.Page, dbs: DataDBSingleton):
         super().__init__(dbs)
         self.route = "/evento_edit"
-        self.appbar = ft.AppBar(title=ft.Text(value="Editar  evento"))
+        self.appbar = ft.AppBar(title=ft.Text(value="Editar evento"))
 
         self.eventoDB = EventoDB(dbs)
         self.evento: Evento = self.eventoDB.select_evento(id)

@@ -118,7 +118,7 @@ class CategoriaEventoView(ft.View):
                     value="Cor:",
                 ),
                 ft.Container(
-                    bgcolor=txt_cor.value,  # "#a233c4", #
+                    bgcolor=txt_cor.value, 
                     width=50,
                     height=15,
                 ),
@@ -144,9 +144,3 @@ class CategoriaEventoView(ft.View):
         eventoCategoria: EventoCategoria = e.control.data
         rota = "/categoria_evento_edit__-__" + str(eventoCategoria.id)
         self.page.go(rota)
-
-    # def ver_categorias_data(db: DataDB):
-    #     """Listagem de categorias"""
-    #     print("\n\n Categorias disponíves: \n")
-    #     for eventoCategoria in db.select_evento_categoria_todos():
-    #         print(eventoCategoria)

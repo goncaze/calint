@@ -130,7 +130,4 @@ class EventoCategoriaDB:
 
         id = cursor.lastrowid
 
-        print("id = cursor.lastrowid")
-        print(f"{id = }")
-        # return cursor.lastrowid
         return id

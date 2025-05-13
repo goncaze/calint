@@ -13,7 +13,6 @@ class CategoriaEventoCreateView(CategoriaEventoCRUDView):
         super().__init__()
         self.route = "/categoria_evento_create"
         self.appbar = ft.AppBar(
-            # title=ft.Text(value="Cadastrar categoria evento"), bgcolor="#008B00"
             title=ft.Text(value="Cadastrar categoria evento")
         )
 
