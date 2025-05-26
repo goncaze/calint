@@ -13,7 +13,7 @@
 #         super().__init__()
 #         self.data: Data = None
 #         self.page :ft.Page = page
-#         self.data_db :DataDB = DataDB(dbs)        
+#         self.data_db :DataDB = DataDB(dbs)
 #         self.evento_db :EventoDB = EventoDB(dbs)
 #         self.appbar :ft.AppBar = ft.AppBar(title=ft.Text(value="Eventos por data"))
 
@@ -21,8 +21,8 @@
 
 #         self.dtpkr_data = ft.DatePicker(on_change = self.change_date)
 
-#         self.icb_data = ft.IconButton(      
-#             icon=ft.icons.CALENDAR_MONTH,
+#         self.icb_data = ft.IconButton(
+#             icon=ft.Icons.CALENDAR_MONTH,
 #             on_click=lambda _: self.page.open(self.dtpkr_data),
 #         )
 
@@ -38,13 +38,13 @@
 #         ###
 #         # atributo coluna para litar eventos da data selecionada
 #         #
-#         self.cln_listagem = ft.Column(        
+#         self.cln_listagem = ft.Column(
 #             scroll=ft.ScrollMode.ALWAYS,
 #             expand=True,
 #         )
-        
+
 #         self.floating_action_button = ft.FloatingActionButton(
-#             icon=ft.icons.ADD,
+#             icon=ft.Icons.ADD,
 #             on_click=lambda _: self.page.go("/data_add_evento"),
 #         )
 
@@ -61,7 +61,7 @@
 #                         ),
 #                         self.cln_listagem,
 #                         self.linha_ttb,
-#                     ]   
+#                     ]
 #                 )
 #             )
 #         ]
@@ -86,7 +86,6 @@
 #         return lw_lista
 
 
-
 #     def carregar_dados(self) -> list[ft.Card]:
 #         lista_cards: list[ft.Card] = []
 
@@ -96,19 +95,18 @@
 #             for evento in self.data.eventos:
 #                 txt_evento = ft.Text(
 #                     value=evento.evento,
-#                     color=ft.colors.GREY_900,
+#                     color=ft.Colors.GREY_900,
 #                 )
 
-#                 lista_cards.append(                
+#                 lista_cards.append(
 #                     self.add_dados_Linha(txt_evento)
 #                 )
 
 #         return lista_cards
-    
 
 
 #     def add_dados_Linha(
-#         self,        
+#         self,
 #         txt_evento: ft.Text,
 #     ) -> ft.Card:
 
@@ -139,8 +137,8 @@
 #         #             content=ft.Text(
 #         #                 weight=ft.FontWeight.BOLD,
 #         #                 value="Eventos:",
-#         #                 color=ft.colors.BLUE_GREY_900,
-#         #                 # color=ft.colors.AMBER,
+#         #                 color=ft.Colors.BLUE_GREY_900,
+#         #                 # color=ft.Colors.AMBER,
 #         #             ),
 #         #             margin=ft.margin.only(left=10, right=10),
 #         #         )
@@ -159,12 +157,10 @@
 #         card_dados_data = ft.Card(
 #             content=txt_evento,
 #             margin=ft.margin.only(right=20),
-#             color=ft.colors.AMBER_200,
+#             color=ft.Colors.AMBER_200,
 #         )
 
 #         return card_dados_data
-
-
 
 
 #     def change_date(self, e: ft.ControlEvent):
@@ -177,7 +173,6 @@
 #         self.cln_listagem.update()
 
 
-
 #     def validar(self) -> bool:
 #         is_valido: bool = True
 #         if self.ttf_data.value == "":
@@ -187,8 +182,6 @@
 #         return is_valido
 
 
-
 #     def salvar(self, e):
-#         if self.validar():    
+#         if self.validar():
 #             ...
- 

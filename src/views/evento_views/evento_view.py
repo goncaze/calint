@@ -9,13 +9,13 @@ class EventoView(ft.View):
     def __init__(self, page: ft.Page, dbs: DataDBSingleton):
         super().__init__()
         self.route = "/eventos"
-        self.bgcolor = ft.colors.WHITE
+        self.bgcolor = ft.Colors.WHITE
         self.appbar = ft.AppBar(title=ft.Text("Eventos"))
         self.page = page
         self.evento_db = EventoDB(dbs)
 
         self.floating_action_button = ft.FloatingActionButton(
-            icon=ft.icons.ADD,
+            icon=ft.Icons.ADD,
             on_click=lambda _: self.page.go("/evento_create"),
         )
 
@@ -55,7 +55,7 @@ class EventoView(ft.View):
                     )
                 ],
                 weight=ft.FontWeight.BOLD,
-                color=ft.colors.BLUE,
+                color=ft.Colors.BLUE,
             )
 
             txt_descricao = ft.Text(
@@ -82,15 +82,15 @@ class EventoView(ft.View):
                 ft.Row(
                     controls=[
                         ft.IconButton(
-                            icon=ft.icons.EDIT_DOCUMENT,
-                            icon_color=ft.colors.CYAN_100,  # "#2ba84a",
+                            icon=ft.Icons.EDIT_DOCUMENT,
+                            icon_color=ft.Colors.CYAN_100,  # "#2ba84a",
                             tooltip="Editar",
                             on_click=self.icb_editar,
                             data=txt_evento.spans[0].data,  # Objeto evento
                             padding=0,
                         ),
                         ft.IconButton(
-                            icon=ft.icons.DELETE,
+                            icon=ft.Icons.DELETE,
                             on_click=self.deletar,
                             data=txt_evento.spans[0].data,  # Objeto evento
                             padding=0,

@@ -13,7 +13,7 @@ class DropDownEvento(ft.Container):
         self.linha = ft.Row(
             controls=[
                 self.dpd_evento,
-                ft.IconButton(icon=ft.icons.DELETE, on_click=self.deletar_a_si_mesmo),
+                ft.IconButton(icon=ft.Icons.DELETE, on_click=self.deletar_a_si_mesmo),
             ]
         )
         self.content = self.linha

@@ -1,12 +1,13 @@
 import flet as ft
 from src.modelo.evento_categoria import EventoCategoria
+from src.views.controles.seletor import SeletorCor
 
 
 class CategoriaEventoCRUDView(ft.View):
 
     def __init__(self):
         super().__init__()
-        self.bgcolor = ft.colors.WHITE
+        self.bgcolor = ft.Colors.WHITE
         self.ttf_categoria = ft.TextField(
             label="Categoria",
             hint_text="Categoria",
@@ -20,6 +21,25 @@ class CategoriaEventoCRUDView(ft.View):
         self.ttf_cor = ft.TextField(
             label="Cor",
             hint_text="Cor",
+            expand=True,
+        )
+
+        self.ttb_selecionar = ft.TextButton(
+            text="Selecionar", on_click=self.selecionar_cor
+        )
+        self.seletor_de_cores = SeletorCor()
+        self.seletor_de_cores.actions = [
+            ft.TextButton(
+                text="Fechar", on_click=lambda e: self.page.close(self.seletor_de_cores)
+            ),
+            self.ttb_selecionar,
+        ]
+
+        self.ttb_select_cor = ft.TextButton(
+            text="alterar cor",
+            icon=ft.Icons.COLOR_LENS,
+            expand=True,
+            on_click=lambda e: self.page.open(self.seletor_de_cores),
         )
 
         self.btn_registrar = ft.ElevatedButton(text="Salvar", on_click=self.registrar)
@@ -32,7 +52,7 @@ class CategoriaEventoCRUDView(ft.View):
             controls=[
                 self.ttf_categoria,
                 self.ttf_descricao,
-                self.ttf_cor,
+                ft.Row(controls=[self.ttf_cor, self.ttb_select_cor]),
                 ft.Container(margin=ft.margin.all(5)),
                 ft.Row(
                     controls=[
@@ -48,6 +68,11 @@ class CategoriaEventoCRUDView(ft.View):
             ft.Container(margin=ft.margin.only(top=10)),
             self.formulario_categoria_create,
         ]
+
+    def selecionar_cor(self, e: ft.ControlEvent):
+        self.ttf_cor.value = self.seletor_de_cores.data
+        self.ttf_cor.update()
+        self.page.close(self.seletor_de_cores)
 
     @property
     def view(self) -> ft.View:

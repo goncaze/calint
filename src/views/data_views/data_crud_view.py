@@ -40,7 +40,7 @@
 #         self.page.overlay.append(self.date_picker)
 
 #         self.data_iconButton = ft.IconButton(
-#             icon=ft.icons.CALENDAR_MONTH,
+#             icon=ft.Icons.CALENDAR_MONTH,
 #             on_click=lambda _: self.date_picker.pick_date(),
 #             # data=0,
 #         )
@@ -59,7 +59,7 @@
 #         )
 
 #         self.delete_iconButton = ft.IconButton(
-#             icon=ft.icons.DELETE,
+#             icon=ft.Icons.DELETE,
 #             on_click=...,  # lambda _: self.date_picker.pick_date(),
 #             # data=0,
 #         )
@@ -79,7 +79,7 @@
 #                 ft.Text(
 #                     spans=[ft.TextSpan(text="Eventos", style=ft.TextStyle(size=20))],
 #                     weight=ft.FontWeight.BOLD,
-#                     color=ft.colors.BLUE,
+#                     color=ft.Colors.BLUE,
 #                 ),
 #                 self.formulario_eventos,
 #                 ft.Container(margin=ft.margin.all(5)),

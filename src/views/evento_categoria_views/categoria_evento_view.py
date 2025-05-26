@@ -9,13 +9,13 @@ class CategoriaEventoView(ft.View):
     def __init__(self, page: ft.Page, dbs: DataDBSingleton):
         super().__init__()
         self.route = "/categoria_evento"
-        self.bgcolor = ft.colors.WHITE
+        self.bgcolor = ft.Colors.WHITE
         self.appbar = ft.AppBar(title=ft.Text("Categorias de evento"))
         self.page = page
         self.evento_categoria_db = EventoCategoriaDB(dbs)
 
         self.floating_action_button = ft.FloatingActionButton(
-            icon=ft.icons.ADD,
+            icon=ft.Icons.ADD,
             on_click=lambda _: self.page.go("/categoria_evento_create"),
         )
 
@@ -55,7 +55,7 @@ class CategoriaEventoView(ft.View):
                     )
                 ],
                 weight=ft.FontWeight.BOLD,
-                color=ft.colors.BLUE,
+                color=ft.Colors.BLUE,
             )
 
             txt_descricao = ft.Text(
@@ -82,14 +82,14 @@ class CategoriaEventoView(ft.View):
                 ft.Row(
                     controls=[
                         ft.IconButton(
-                            icon=ft.icons.EDIT_DOCUMENT,
-                            icon_color=ft.colors.CYAN_100,  # "#2ba84a",
+                            icon=ft.Icons.EDIT_DOCUMENT,
+                            icon_color=ft.Colors.CYAN_100,  # "#2ba84a",
                             tooltip="Editar",
                             on_click=self.icb_editar,
                             data=txt_categoria.spans[0].data,  # Objeto dataCategoria
                         ),
                         ft.IconButton(
-                            icon=ft.icons.DELETE,
+                            icon=ft.Icons.DELETE,
                             on_click=self.deletar,
                             data=txt_categoria.spans[0].data,  # Objeto dataCategoria
                         ),
@@ -118,7 +118,7 @@ class CategoriaEventoView(ft.View):
                     value="Cor:",
                 ),
                 ft.Container(
-                    bgcolor=txt_cor.value, 
+                    bgcolor=txt_cor.value,
                     width=50,
                     height=15,
                 ),

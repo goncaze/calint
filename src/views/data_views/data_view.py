@@ -9,16 +9,16 @@
 #         super().__init__()
 #         self.route = "/datas"
 #         self.appbar = ft.AppBar(
-#             title=ft.Text("Datas"), bgcolor="#005400", color=ft.colors.WHITE
+#             title=ft.Text("Datas"), bgcolor="#005400", color=ft.Colors.WHITE
 #         )
-#         self.bgcolor = ft.colors.WHITE
+#         self.bgcolor = ft.Colors.WHITE
 #         # self.horizontal_alignment = ft.CrossAxisAlignment.STRETCH
 
 #         self.page = page
 #         self.data_db = DataDB(dbs)
 
 #         self.floating_action_button = ft.FloatingActionButton(
-#             icon=ft.icons.ADD,
+#             icon=ft.Icons.ADD,
 #             on_click=lambda _: self.page.go("/selecionar_data"),
 #         )
 
@@ -59,7 +59,7 @@
 #                     )
 #                 ],
 #                 weight=ft.FontWeight.BOLD,
-#                 color=ft.colors.GREY_100,
+#                 color=ft.Colors.GREY_100,
 #             )
 
 #             # txt_categoria = ft.Text(
@@ -71,7 +71,7 @@
 #             for evento in data.eventos:
 #                 txt_evento = ft.Text(
 #                     value=evento.evento,
-#                     color=ft.colors.GREY_900,
+#                     color=ft.Colors.GREY_900,
 #                 )
 #                 lista_txt_eventos.append(txt_evento)
 
@@ -117,8 +117,8 @@
 #                     content=ft.Text(
 #                         weight=ft.FontWeight.BOLD,
 #                         value="Eventos:",
-#                         color=ft.colors.BLUE_GREY_900,
-#                         # color=ft.colors.AMBER,
+#                         color=ft.Colors.BLUE_GREY_900,
+#                         # color=ft.Colors.AMBER,
 #                     ),
 #                     margin=ft.margin.only(left=10, right=10),
 #                 )
@@ -137,7 +137,7 @@
 #         card_dados_data = ft.Card(
 #             content=coluna,
 #             margin=ft.margin.only(right=20),
-#             color=ft.colors.AMBER_200,
+#             color=ft.Colors.AMBER_200,
 #         )
 
 #         return card_dados_data

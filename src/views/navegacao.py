@@ -24,35 +24,35 @@ class Navegador:
                 # ft.Container(height=12),
                 ft.NavigationDrawerDestination(
                     label="Datas",
-                    icon=ft.icons.CALENDAR_TODAY_OUTLINED,
-                    selected_icon_content=ft.Icon(ft.icons.CALENDAR_MONTH_OUTLINED),
+                    icon=ft.Icons.CALENDAR_TODAY_OUTLINED,
+                    selected_icon=ft.Icon(ft.Icons.CALENDAR_MONTH_OUTLINED),
                 ),
                 ft.Divider(thickness=2),
                 # ft.NavigationDrawerDestination(
-                #     icon_content=ft.Icon(ft.icons.CALENDAR_TODAY_OUTLINED),
+                #     icon_content=ft.Icon(ft.Icons.CALENDAR_TODAY_OUTLINED),
                 #     label="Categoria Datas",
-                #     selected_icon=ft.icons.MAIL,
+                #     selected_icon=ft.Icons.MAIL,
                 # ),
                 ft.NavigationDrawerDestination(
-                    icon_content=ft.Icon(ft.icons.EVENT_OUTLINED),
+                    icon=ft.Icons.EVENT_OUTLINED,
                     label="Eventos",
-                    selected_icon=ft.icons.EVENT,
+                    selected_icon=ft.Icons.EVENT,
                 ),
                 ft.NavigationDrawerDestination(
-                    icon_content=ft.Icon(ft.icons.EVENT_NOTE_OUTLINED),
+                    icon=ft.Icons.EVENT_NOTE_OUTLINED,
                     label="Categoria Eventos",
-                    selected_icon=ft.icons.MAIL,
-                ),                
-                ft.NavigationDrawerDestination(
-                    icon_content=ft.Icon(ft.icons.EVENT_NOTE_OUTLINED),
-                    label="Ano letivo",
-                    selected_icon=ft.icons.MAIL,
+                    selected_icon=ft.Icons.MAIL,
                 ),
                 ft.NavigationDrawerDestination(
-                    icon_content=ft.Icon(ft.icons.EVENT_NOTE_OUTLINED),
+                    icon=ft.Icons.EVENT_NOTE_OUTLINED,
+                    label="Ano letivo",
+                    selected_icon=ft.Icons.MAIL,
+                ),
+                ft.NavigationDrawerDestination(
+                    icon=ft.Icons.EVENT_NOTE_OUTLINED,
                     label="Calendário",
-                    selected_icon=ft.icons.MAIL,
-                ),                  
+                    selected_icon=ft.Icons.MAIL,
+                ),
             ],
             on_change=self.page_go,
         )
@@ -75,9 +75,6 @@ class Navegador:
                 self.page.go("/ano_letivo")
             case 4:
                 self.page.go("/calendario")
-
-
-
 
     def aux_page_go(self, url: str):
 

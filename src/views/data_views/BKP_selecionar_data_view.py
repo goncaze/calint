@@ -72,7 +72,7 @@
 #                 ft.Text(
 #                     spans=[ft.TextSpan(text="Eventos", style=ft.TextStyle(size=20))],
 #                     weight=ft.FontWeight.BOLD,
-#                     color=ft.colors.BLUE,
+#                     color=ft.Colors.BLUE,
 #                 ),
 #                 self.coluna_eventos,
 #             ],
@@ -119,7 +119,6 @@
 
 #         # self.page.overlay.append(self.date_picker)
 #         self.page.open(self.date_picker)
-
 
 
 #     @property

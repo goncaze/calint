@@ -66,20 +66,18 @@ class App:
             self.page.views.append(
                 ft.View(
                     route="/",
-                    bgcolor=ft.colors.WHITE,
+                    bgcolor=ft.Colors.WHITE,
                     appbar=ft.AppBar(title=ft.Text("CALINT")),
                     drawer=self.navegador.drawer(),
                     controls=[ft.Image(src="Viana_Prancheta.png")],
                 )
             )
 
-
         ######################################
         # Rotas para datas
         ##
-        elif rota == "/data_add_evento":            
+        elif rota == "/data_add_evento":
             self.page.views.append(DataAddEventoView(self.page, self.dbs))
-
 
         ######################################
         # Rotas para eventos
@@ -118,7 +116,6 @@ class App:
             self.page.views.pop()
             self.page.views.append(EventoView(self.page, self.dbs))
             self.page.route = "/eventos"
-
 
         ######################################
         # Rotas para categorias de evento
@@ -161,7 +158,6 @@ class App:
             self.page.views.append(CategoriaEventoView(self.page, self.dbs))
             self.page.route = "/categoria_evento"
 
-
         ######################################
         # Rotas para resetar ano letivo
         ##
@@ -174,7 +170,6 @@ class App:
 
             if not esta_em_pageviews:
                 self.page.views.append(AnoLetivoView(self.page, self.dbs))
-
 
         ######################################
         # Rotas para exibir calendário
@@ -189,15 +184,11 @@ class App:
             if not esta_em_pageviews:
                 calendario_view = CalendarioView(self.page, self.dbs)
                 self.page.views.append(calendario_view)
-                
-                self.page.add(
-                    calendario_view
-                )
+
+                self.page.add(calendario_view)
                 calendario_view.reposicionar_auto()
 
-
         self.page.update()
-
 
     def view_pop(self, e):
         self.page.views.pop()
@@ -209,7 +200,7 @@ class App:
 
 
 def main(page: ft.Page):
-    page.bgcolor = ft.colors.AMBER
+    page.bgcolor = ft.Colors.AMBER
     page.theme_mode = ft.ThemeMode.LIGHT
     page.theme = ft.Theme(color_scheme_seed="#FFFFFF")
     App(page)

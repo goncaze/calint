@@ -16,7 +16,7 @@
 #         self.data_db = DataDB(dbs)
 
 #         # self.floating_action_button = ft.FloatingActionButton(
-#         #     icon=ft.icons.ADD,
+#         #     icon=ft.Icons.ADD,
 #         #     on_click=lambda _: self.page.go("/data_create"),
 #         # )
 
@@ -57,7 +57,7 @@
 #                     )
 #                 ],
 #                 weight=ft.FontWeight.BOLD,
-#                 color=ft.colors.BLUE,
+#                 color=ft.Colors.BLUE,
 #             )
 
 #             txt_categoria = ft.Text(
@@ -93,15 +93,15 @@
 #                     ft.Row(
 #                         controls=[
 #                             ft.IconButton(
-#                                 icon=ft.icons.EDIT_DOCUMENT,
-#                                 icon_color=ft.colors.CYAN_100,  # "#2ba84a",
+#                                 icon=ft.Icons.EDIT_DOCUMENT,
+#                                 icon_color=ft.Colors.CYAN_100,  # "#2ba84a",
 #                                 tooltip="Editar",
 #                                 on_click=self.icb_editar,
 #                                 data=txt_data.spans[0].data,  # Objeto evento
 #                                 padding=0,
 #                             ),
 #                             ft.IconButton(
-#                                 icon=ft.icons.DELETE,
+#                                 icon=ft.Icons.DELETE,
 #                                 on_click=self.deletar,
 #                                 data=txt_data.spans[0].data,  # Objeto evento
 #                                 padding=0,

@@ -16,7 +16,7 @@ class CategoriaDataView(ft.View):
         self.data_categoria_db = DataCategoriaDB(dbs)
 
         self.floating_action_button = ft.FloatingActionButton(
-            icon=ft.icons.ADD,
+            icon=ft.Icons.ADD,
             on_click=lambda _: self.page.go("/categoria_data_create"),
         )
 
@@ -56,7 +56,7 @@ class CategoriaDataView(ft.View):
                     )
                 ],
                 weight=ft.FontWeight.BOLD,
-                color=ft.colors.BLUE,
+                color=ft.Colors.BLUE,
             )
 
             txt_descricao = ft.Text(
@@ -79,14 +79,14 @@ class CategoriaDataView(ft.View):
                 ft.Row(
                     controls=[
                         ft.IconButton(
-                            icon=ft.icons.EDIT_DOCUMENT,
-                            icon_color=ft.colors.CYAN_100,  # "#2ba84a",
+                            icon=ft.Icons.EDIT_DOCUMENT,
+                            icon_color=ft.Colors.CYAN_100,  # "#2ba84a",
                             tooltip="Editar",
                             on_click=self._icb_editar,
                             data=txt_categoria.spans[0].data,  # Objeto dataCategoria
                         ),
                         ft.IconButton(
-                            icon=ft.icons.DELETE,
+                            icon=ft.Icons.DELETE,
                             on_click=self._deletar,
                             data=txt_categoria.spans[0].data,  # Objeto dataCategoria
                         ),

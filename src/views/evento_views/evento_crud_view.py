@@ -10,7 +10,7 @@ class EventoCRUDView(ft.View):
 
     def __init__(self, dbs: DataDBSingleton):
         super().__init__()
-        self.bgcolor = ft.colors.WHITE
+        self.bgcolor = ft.Colors.WHITE
         self.eventoCategoriaDB = EventoCategoriaDB(dbs)
 
         self.ttf_evento = ft.TextField(

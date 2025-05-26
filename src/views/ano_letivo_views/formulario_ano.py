@@ -58,37 +58,36 @@ class FormularioAno(ft.Card):
         )
 
         self.icb_letivo_1 = ft.IconButton(
-            icon=ft.icons.CALENDAR_MONTH,
+            icon=ft.Icons.CALENDAR_MONTH,
             on_click=lambda _: self.page.open(self.dtpkr_i_letivo),
         )
 
         self.icb_letivo_2 = ft.IconButton(
-            icon=ft.icons.CALENDAR_MONTH,
+            icon=ft.Icons.CALENDAR_MONTH,
             on_click=lambda _: self.page.open(self.dtpkr_f_letivo),
         )
 
         self.icb_i_ferias_1 = ft.IconButton(
-            icon=ft.icons.CALENDAR_MONTH,
+            icon=ft.Icons.CALENDAR_MONTH,
             on_click=lambda _: self.page.open(self.dtpkr_i_ferias_1),
         )
 
         self.icb_f_ferias_1 = ft.IconButton(
-            icon=ft.icons.CALENDAR_MONTH,
+            icon=ft.Icons.CALENDAR_MONTH,
             on_click=lambda _: self.page.open(self.dtpkr_f_ferias_1),
         )
 
         self.icb_i_ferias_2 = ft.IconButton(
-            icon=ft.icons.CALENDAR_MONTH,
+            icon=ft.Icons.CALENDAR_MONTH,
             on_click=lambda _: self.page.open(self.dtpkr_i_ferias_2),
         )
 
         self.icb_f_ferias_2 = ft.IconButton(
-            icon=ft.icons.CALENDAR_MONTH,
+            icon=ft.Icons.CALENDAR_MONTH,
             on_click=lambda _: self.page.open(self.dtpkr_f_ferias_2),
         )
 
         self.ttb_salvar = ft.TextButton(text="Salvar", on_click=self.salvar)
-
 
         self.linha_ttb = ft.Row(
             controls=[
@@ -166,7 +165,6 @@ class FormularioAno(ft.Card):
     def change_date_f_ferias_2(self, e: ft.ControlEvent):
         self.ttf_fim_ferias_2.value = self.dtpkr_f_ferias_2.value.strftime("%d-%m-%Y")
         self.ttf_fim_ferias_2.update()
-
 
     def validar(self) -> bool:
         is_valido: bool = True
@@ -345,7 +343,6 @@ class FormularioAno(ft.Card):
         else:
             self.update()
 
-
     ###
     #   Configurar as datas de dias letivos no database
     #
@@ -389,7 +386,6 @@ class FormularioAno(ft.Card):
 
         self.data_db.preencher_data_evento_muitos(parametros)
 
-
     ###
     #   Configurar as datas de férias no database
     #
@@ -432,7 +428,6 @@ class FormularioAno(ft.Card):
 
         return lista_dias_ferias
 
-
     ###
     #   Excluir tabelas e recriá-las
     #
@@ -440,7 +435,6 @@ class FormularioAno(ft.Card):
         self.data_db.excluir_tabela_evento_data()
         self.evento_db.excluir_tabela()
         self.evento_cat_db.excluir_tabela()
-
 
         self.data_db.criar_tabela_data()
         self.evento_cat_db.criar_tabela_evento_categoria()

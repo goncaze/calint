@@ -22,38 +22,39 @@ class DataAddEventoView(ft.View):
             label="Data",
             hint_text="Data",
             expand=True,
-            read_only=True, 
+            read_only=True,
         )
-        
-        self.dtpkr_data = ft.DatePicker(on_change = self.change_date)
 
-        self.icb_data = ft.IconButton(      
-            icon=ft.icons.CALENDAR_MONTH,
+        self.dtpkr_data = ft.DatePicker(on_change=self.change_date)
+
+        self.icb_data = ft.IconButton(
+            icon=ft.Icons.CALENDAR_MONTH,
             on_click=lambda _: self.page.open(self.dtpkr_data),
         )
 
         self.coluna_eventos = ft.Column()
 
         self.coluna_de_eventos_titulo = ft.Container(
-            content = ft.Column(                
+            content=ft.Column(
                 controls=[
                     ft.Text(
-                        spans=[ft.TextSpan(text="Eventos", style=ft.TextStyle(size=20))],
+                        spans=[
+                            ft.TextSpan(text="Eventos", style=ft.TextStyle(size=20))
+                        ],
                         weight=ft.FontWeight.BOLD,
-                        color=ft.colors.BLUE,
+                        color=ft.Colors.BLUE,
                     ),
                     self.coluna_eventos,
-                ],                
+                ],
             ),
             margin=10,
         )
 
-
         self.btn_atualizar_eventos_data = ft.ElevatedButton(
-            text="Salvar", 
-            on_click=self.atualizar_eventos_data, 
+            text="Salvar",
+            on_click=self.atualizar_eventos_data,
             visible=True,
-            icon=ft.icons.SAVE_SHARP,
+            icon=ft.Icons.SAVE_SHARP,
         )
 
         self.btn_cancelar = ft.ElevatedButton(text="Cancelar", on_click=self.cancelar)
@@ -88,24 +89,24 @@ class DataAddEventoView(ft.View):
             ),
         )
 
-
         self.controls = [
             ft.SafeArea(
-                content = ft.Column(                    
+                content=ft.Column(
                     controls=[
                         ft.Row(controls=[self.ttf_data, self.icb_data]),
                         self.coluna_de_eventos_titulo,
                         ft.Row(
-                            controls=[self.btn_atualizar_eventos_data,],
+                            controls=[
+                                self.btn_atualizar_eventos_data,
+                            ],
                             alignment=ft.MainAxisAlignment.END,
-                        )
+                        ),
                     ],
                     scroll=ft.ScrollMode.ALWAYS,
                     expand=True,
                 )
             )
         ]
-
 
     def handle_close_dlg(self, e):
         self.page.close(self.dlg_apos_atualizar)
@@ -116,18 +117,14 @@ class DataAddEventoView(ft.View):
         self.limpar_coluna_eventos()
 
     def change_date(self, e: ft.ControlEvent):
-        self.ttf_data.value = self.dtpkr_data.value.strftime('%d-%m-%Y')
-        self.data = Data(data=self.dtpkr_data.value.strftime('%Y-%m-%d'))
+        self.ttf_data.value = self.dtpkr_data.value.strftime("%d-%m-%Y")
+        self.data = Data(data=self.dtpkr_data.value.strftime("%Y-%m-%d"))
         self.limpar_coluna_eventos()
         self.buscar_dados_data()
         self.ttf_data.update()
 
-
-
     def cancelar(self, e: ft.ControlEvent):
         self.page.go(route="/data_reload")
-
-
 
     def listar_opcoes_eventos(self) -> list:
         lista = []
@@ -140,8 +137,6 @@ class DataAddEventoView(ft.View):
             )
         return lista
 
-
-
     def eventos_selecionados(self) -> list[Evento]:
         lista_eventos: list[Evento] = []
 
@@ -151,8 +146,6 @@ class DataAddEventoView(ft.View):
                     lista_eventos.append(opcao.data)
 
         return lista_eventos
-    
-
 
     def novo_dpd_evento(self) -> DropDownEvento:
         novo_dpd_evento = DropDownEvento(
@@ -165,8 +158,6 @@ class DataAddEventoView(ft.View):
             self.delete_dpd_evento,
         )
         return novo_dpd_evento
-
-
 
     def incluir_novo_dpd_evento(self, e):
         self.coluna_eventos.controls.append(self.novo_dpd_evento())
@@ -189,7 +180,7 @@ class DataAddEventoView(ft.View):
             self.data_db.update_data_evento(self.data)
             self.limpar_geral()
             self.mensagem_dlg.value = "Os dados foram atualizados!"
-            self.page.open(self.dlg_apos_atualizar)            
+            self.page.open(self.dlg_apos_atualizar)
         else:
             self.mensagem_dlg.value = "Primeiro, selecione uma data!"
             self.page.open(self.dlg_apos_atualizar)
@@ -216,7 +207,6 @@ class DataAddEventoView(ft.View):
                         self.delete_dpd_evento,
                     )
                 )
-
 
         dpd_evento = ft.Dropdown(
             hint_text="Selecione evento",

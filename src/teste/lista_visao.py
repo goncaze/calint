@@ -1,10 +1,11 @@
 import flet as ft
 
+
 class VisaoLista(ft.View):
     def __init__(self):
         super().__init__()
         self.scroll = ft.ScrollMode.ALWAYS
-        
+
         self.lv = ft.ListView(
             controls=[
                 ft.Card(
@@ -17,7 +18,7 @@ class VisaoLista(ft.View):
                                     title=ft.Text(f"Elemento {i}"),
                                 ),
                                 ft.ListTile(
-                                    leading=ft.Icon(ft.icons.SETTINGS),
+                                    leading=ft.Icon(ft.Icons.SETTINGS),
                                     title=ft.Text("One-line selected list tile"),
                                     selected=True,
                                 ),
@@ -31,37 +32,34 @@ class VisaoLista(ft.View):
             ],
         )
 
-        self.controls = [
-            self.lv
-        ]        
-        
+        self.controls = [self.lv]
+
 
 class App:
 
     def __init__(self, page: ft.Page):
-        self.page = page                 
+        self.page = page
         self.page.scroll = ft.ScrollMode.ALWAYS
         self.page.auto_scroll = True
         self.page.on_route_change = self.route_change
         self.page.on_view_pop = self.view_pop
         self.page.go("/")
 
-
         self.obj_lv = VisaoLista()
 
         self.page.add(
             ft.SafeArea(
                 content=ft.Column(
-                    controls=[ 
+                    controls=[
                         self.obj_lv,
                     ],
                     expand=True,
                 )
-            ) 
+            )
         )
 
         self.obj_lv.scroll_to(key="35")
-      
+
     def route_change(self, route: ft.RouteChangeEvent):
         rota: str = route.route
 
@@ -78,10 +76,10 @@ class App:
         self.page.go(top_view.route)
 
 
-
 def main(page: ft.Page):
     # page.scroll = ft.ScrollMode.ALWAYS
     App(page)
+
 
 if __name__ == "__main__":
     ft.app(target=main)
