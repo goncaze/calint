@@ -56,9 +56,14 @@ class PrimeiroDashboard(ft.View):
                 horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
                 # expand=True,
                 controls=[
-                    ft.Container(height=5),
+                    ft.Container(
+                        height=20,
+                        bgcolor="#afffbf",
+                    ),
                     ft.Image(
-                        src="http://10.0.0.61:8000/Campus_Viana_edited.png",
+                        # src="http://10.0.0.61:8000/Canva_H.png",
+                        src="Canva_H.png",
+                        height=100,
                         # color="green",
                     ),
                     self.hoje_card,
@@ -74,7 +79,7 @@ class PrimeiroDashboard(ft.View):
                     # bgcolor=ft.Colors.PINK,
                     content=ft.Text(
                         value="Calendário Acadêmico do IFMA Campus Viana",
-                        theme_style=ft.TextThemeStyle.BODY_LARGE,
+                        theme_style=ft.TextThemeStyle.BODY_MEDIUM,
                         color=ft.Colors.WHITE,
                     ),
                 ),

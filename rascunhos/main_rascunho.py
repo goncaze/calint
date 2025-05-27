@@ -18,7 +18,6 @@ from src.views.calendario.calendario import CalendarioView
 from src.views.navegacao import Navegador
 
 from src.views.controles.hoje_card import HojeCard
-from src.views.dashboards.primeiro_dashboard import PrimeiroDashboard
 
 # locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 
@@ -32,7 +31,7 @@ class App:
     def __init__(self, page: ft.Page):
         self.page = page
         self.page.theme_mode = ft.ThemeMode.LIGHT
-        self.page.theme = ft.Theme(color_scheme_seed="#afffbf")
+        self.page.theme = ft.Theme(color_scheme_seed="#EEEEEE")
         # page.window_width = 380
         self.page.window.width = 360
         # page.window_height = 500  # 650
@@ -75,7 +74,19 @@ class App:
             # Limpa a lista de views
             self.page.views.clear()
             # Adicionar view "/" na lista de views
-            self.page.views.append(PrimeiroDashboard(self.page, self.dbs))
+            self.page.views.append(
+                ft.View(
+                    route="/",
+                    horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
+                    bgcolor=ft.Colors.WHITE,
+                    appbar=ft.AppBar(title=ft.Text("CALINT")),
+                    drawer=self.navegador.drawer(),
+                    controls=[
+                        ft.Image(src="Campus_Viana_edited.png", color="green"),
+                        self.hoje_card,
+                    ],
+                )
+            )
 
         ######################################
         # Rotas para datas
