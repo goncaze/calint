@@ -20,7 +20,7 @@ class HojeCard(ft.Card):
         super().__init__()
         self.page = page
         # self.color = "#afffbf"
-        self.expand = True
+        # self.expand = True
 
         # self.width = 350
         # self.height = 200
@@ -94,19 +94,36 @@ class HojeCard(ft.Card):
                     ],
                 ),
                 ft.Container(
-                    # border=ft.border.all(1, "black"),
+                    # border=ft.border.all(1, "brown"),
                     # margin=ft.margin.only(top=15),
                     content=ft.Column(
+                        spacing=0,
                         horizontal_alignment=ft.CrossAxisAlignment.START,
                         expand=True,
                         controls=[
-                            ft.Text(value=evento.evento)
-                            for evento in self.data_obj.eventos
+                            # ft.Text(value=evento.evento)
+                            # for evento in self.data_obj.eventos
+                            evento
+                            for evento in self.alinhar_eventos()
                         ],
                     ),
                 ),
             ]
         )
+
+    def alinhar_eventos(self) -> list[ft.Control]:
+        lista_eventos: list[ft.Control] = []
+        for evento in self.data_obj.eventos:
+            linha = ft.Row(
+                controls=[
+                    ft.Container(width=5, height=5, bgcolor="black"),
+                    ft.Text(value=evento.evento),
+                ]
+            )
+            lista_eventos.append(linha)
+        return lista_eventos
+
+        ...
 
         # ft.Column(
         #     horizontal_alignment=ft.CrossAxisAlignment.CENTER,

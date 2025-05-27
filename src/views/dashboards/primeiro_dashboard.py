@@ -1,6 +1,7 @@
 import flet as ft
 from src.views.navegacao import Navegador
 from src.views.controles.hoje_card import HojeCard
+from src.views.controles.dias_letivos_card import DiasLetivosCard
 
 
 class PrimeiroDashboard(ft.View):
@@ -36,6 +37,7 @@ class PrimeiroDashboard(ft.View):
         self.page = page
         self.dbs = dbs
         self.hoje_card = HojeCard(self.page, self.dbs)
+        self.dias_letivos_card = DiasLetivosCard(self.page, self.dbs)
         self.route = "/"
         self.horizontal_alignment = ft.CrossAxisAlignment.STRETCH
         self.cor_fundo = "#afffbf"
@@ -62,11 +64,13 @@ class PrimeiroDashboard(ft.View):
                     ),
                     ft.Image(
                         # src="http://10.0.0.61:8000/Canva_H.png",
-                        src="Canva_H.png",
+                        src="http://192.168.188.15:8000/Canva_H.png",
+                        # src="Canva_H.png",
                         height=100,
                         # color="green",
                     ),
                     self.hoje_card,
+                    self.dias_letivos_card,
                 ],
             ),
             bgcolor=self.cor_fundo,
