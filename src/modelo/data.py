@@ -32,10 +32,9 @@ class Data:
     # def cor(self) -> str:
     #     return self._cor
 
-    # @cor.setter 
+    # @cor.setter
     # def cor(self, nova_cor: str) -> str:
     #     self._cor = nova_cor
-    
 
     @property
     def id(self) -> int:
@@ -67,8 +66,8 @@ class Data:
     def __str__(self):
         eventos = ""
         for evento in self._eventos:
-            eventos += f"{evento.evento_categoria.categoria} | "
-            # eventos += f"\t <>  Descrição: {evento.descricao} \n"
+            # eventos += f"{evento.evento_categoria.categoria} | "
+            eventos += f"{evento.evento} | "
 
         # Data categoria = {self._data_categoria.categoria}
         return f"""
@@ -77,8 +76,8 @@ class Data:
             Eventos: {eventos}
             --------
             """
-    
-    # repr += f"data_categoria = {self._data_categoria.categoria})"    
+
+    # repr += f"data_categoria = {self._data_categoria.categoria})"
     def __repr__(self):
         repr = f"Data(id = {self._id},"
         repr += f"data = {self._data})"  # {self._data.strftime('%d/%m/%Y')},"
