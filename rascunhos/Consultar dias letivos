@@ -1,0 +1,23 @@
+SELECT 
+    count(*)
+--    dt.data, evd.evento_id
+FROM 
+    evento_data evd
+INNER JOIN
+    data dt
+    ON
+    evd.data_id = dt.id
+    AND
+    evd.evento_id = 1
+    AND
+    dt.data < '2025-05-27';
+    
+/*WHERE 
+    d.data < '2025-05-29' 
+    AND 
+    d.data > '2025-05-25'
+    AND
+    d.;*/
+--    d.data BETWEEN '2025-09-20' AND '2025-09-29';
+    
+--SELECT timediff('2025-05-29', '2025-09-20')

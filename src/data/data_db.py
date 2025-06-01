@@ -243,6 +243,41 @@ class DataDB:
         return lista_data
 
     # # -----------------------------------------------------------------------
+    # SELECT dias do mês corrente
+    ##
+    def select_dias_mes_corrente(self) -> list[Data]:
+        """
+        SELECT dias do mês corrente e retorna uma lista de objetos do tipo Data.
+        """
+        lista_data: list[Data] = []
+
+        sql = """
+            SELECT 
+                *
+            FROM 
+                data dt
+            WHERE    
+                dt.data >= (SELECT date('now','localtime','start of month'))
+                AND
+                dt.data <= (SELECT date('now','localtime','start of month','+1 month','-1 day'));
+            """
+
+        cursor = self.dbs.executar_sql(sql)
+
+        for registro in cursor:
+            data = Data(
+                id=registro[0],
+                data=registro[1],
+                eventos=self.select_eventos_por_data(registro[0]),
+            )
+            lista_data.append(data)
+            # print("def select_dias_mes_corrente(self) -> list[Data]:")
+            # print(f"{data.data = }")
+            # print(f"{data.eventos}")
+
+        return lista_data
+
+    # # -----------------------------------------------------------------------
     # SELECT somente uma DATA
     ##
     def select_uma_data(self, data: Data) -> Data:
@@ -447,3 +482,56 @@ class DataDB:
                 return data
 
         return None
+
+    # # -----------------------------------------------------------------------
+    # SELECT CONTAGEM DE DIAS DE UM EVENTO A PARTIR DE HOJE
+    ##
+    def select_contagem_dias_especificos(
+        self, evento_id: int, restantes: bool = True
+    ) -> int:
+        """
+        Realiza uma contagem de dias de um evento a partir de HOJE.
+        """
+        parametro: tuple = (evento_id,)
+
+        sql_restantes: str = """
+            SELECT 
+                count(*)
+            FROM 
+                evento_data evd
+            INNER JOIN
+                data dt
+                ON
+                evd.data_id = dt.id
+                AND
+                evd.evento_id = ?
+                AND
+                dt.data > date('now');
+        """
+
+        sql_realizados: str = """
+            SELECT 
+                count(*)
+            FROM 
+                evento_data evd
+            INNER JOIN
+                data dt
+                ON
+                evd.data_id = dt.id
+                AND
+                evd.evento_id = ?
+                AND
+                dt.data <= date('now');
+        """
+
+        if restantes:
+            cursor = self.dbs.executar_sql(sql_restantes, parametro)
+        else:
+            cursor = self.dbs.executar_sql(sql_realizados, parametro)
+
+        resultado = cursor.fetchone()
+
+        # print(f"{type(resultado) = }")
+        # print(f"{resultado = }")
+
+        return resultado[0]

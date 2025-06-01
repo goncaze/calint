@@ -28,6 +28,7 @@ class CalendarioView(ft.View):
         )
 
         self.ano = self.hoje.year - 1
+
         for ano in range(self.hoje.year, self.hoje.year + 2):
             self.ano += 1
             for mes in range(1, 13):
@@ -60,6 +61,8 @@ class CalendarioView(ft.View):
                         ),
                     )
                 )
+
+            # print(f"CalendarioView: {mes_card.coluna_de_eventos.controls = }"),
 
         self.controls.append(
             ft.SafeArea(

@@ -2,6 +2,8 @@ import flet as ft
 from src.views.navegacao import Navegador
 from src.views.controles.hoje_card import HojeCard
 from src.views.controles.dias_letivos_card import DiasLetivosCard
+from src.views.calendario.mes_card import MesCard
+from src.data.data_db import DataDB
 
 
 class PrimeiroDashboard(ft.View):
@@ -9,70 +11,94 @@ class PrimeiroDashboard(ft.View):
         self,
         page: ft.Page,
         dbs,
-        route=None,
-        controls=None,
-        appbar=None,
-        bottom_appbar=None,
-        floating_action_button=None,
-        floating_action_button_location=None,
-        navigation_bar=None,
-        drawer=None,
-        end_drawer=None,
-        vertical_alignment=None,
-        horizontal_alignment=None,
-        spacing=None,
-        padding=None,
-        bgcolor=None,
-        decoration=None,
-        foreground_decoration=None,
-        scroll=None,
-        auto_scroll=None,
-        fullscreen_dialog=None,
-        on_scroll_interval=None,
-        on_scroll=None,
-        adaptive=None,
     ):
         super().__init__()
 
+        # self.expand = True
+        # self.scroll = True
         self.page = page
         self.dbs = dbs
-        self.hoje_card = HojeCard(self.page, self.dbs)
-        self.dias_letivos_card = DiasLetivosCard(self.page, self.dbs)
+        self.data_db = DataDB(self.dbs)
+        self.hoje_card = HojeCard(self.page, self.dbs)  # Card de Hoje
+        self.dias_letivos_card = DiasLetivosCard(self.page, self.dbs)  # Card de Pizza
+        self.dias_letivos_card.margin = ft.margin.only(top=10)
+
         self.route = "/"
-        self.horizontal_alignment = ft.CrossAxisAlignment.STRETCH
-        self.cor_fundo = "#afffbf"
+        # self.horizontal_alignment = ft.CrossAxisAlignment.STRETCH
+        self.vertical_alignment = ft.MainAxisAlignment.START
+        self.cor_fundo = ft.Colors.WHITE  # "#afffbf"
         self.bgcolor = self.cor_fundo  # ft.Colors.WHITE
         self.padding = 0
         self.spacing = 0
         # self.appbar = ft.AppBar(title=ft.Text("CALINT"))
         self.navegador = Navegador(self.page)
         self.drawer_pagelet = self.navegador.drawer()
+
+        self.dias_mes_corrente = self.data_db.select_dias_mes_corrente()
+        self.todas_dt_literal = self.extrair_dt_literal()
+
+        # print(f"self.hoje_card: {self.hoje_card}")
+        # print(f"self.hoje_card.ano: {self.hoje_card.ano}")
+        # print(f"self.hoje_card.mes: {self.hoje_card.mes}")
+
+        self.my_safe_area = ft.Container(
+            height=40,
+            # bgcolor=self.cor_fundo,
+            bgcolor=ft.Colors.GREEN_900,
+            margin=ft.margin.all(0),
+            padding=ft.padding.all(0),
+        )
+        self.my_base_area = ft.Container(
+            height=50,
+            # bgcolor=self.cor_fundo,
+            # bgcolor=ft.Colors.GREEN_900,
+        )
+
+        self.mes_card = MesCard(
+            self.page,
+            self.dbs,
+            self.hoje_card.ano,  # Atribuir ano
+            self.hoje_card.mes,  # Atribuir mês
+            self.dias_mes_corrente,
+            self.todas_dt_literal,
+        )
+
+        self.mes_card.margin = ft.margin.only(left=10, right=10, top=10)
+
+        self.lv_pagelet = ft.ListView(
+            spacing=0,
+            padding=0,
+            expand=True,
+            # horizontal=True,
+        )
         ##################################################################################
         #
+        # self.lv_pagelet.controls.append(
+        #     ft.Container(
+        #         height=50,
+        #         # bgcolor=self.cor_fundo,
+        #         bgcolor=ft.Colors.GREEN_900,
+        #     )
+        # )
+
+        self.lv_pagelet.controls.append(self.hoje_card)
+        self.lv_pagelet.controls.append(self.mes_card)
+        self.lv_pagelet.controls.append(
+            ft.Container(
+                content=self.mes_card.coluna_de_eventos,
+                bgcolor="#F7F7F7",
+                expand=True,
+                width=self.mes_card.width,
+                margin=2,
+                padding=ft.padding.only(left=7, top=10, bottom=2),
+            )
+        )
+        self.lv_pagelet.controls.append(self.dias_letivos_card)
+        self.lv_pagelet.controls.append(self.my_base_area)
+
         self.pagelet = ft.Pagelet(
             expand=True,
-            # appbar=ft.AppBar(
-            #     title=ft.Text("Pagelet AppBar Title"), bgcolor=ft.Colors.AMBER_900
-            # ),
-            content=ft.Column(
-                horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
-                # expand=True,
-                controls=[
-                    ft.Container(
-                        height=20,
-                        bgcolor="#afffbf",
-                    ),
-                    ft.Image(
-                        # src="http://10.0.0.61:8000/Canva_H.png",
-                        src="http://192.168.188.15:8000/Canva_H.png",
-                        # src="Canva_H.png",
-                        height=100,
-                        # color="green",
-                    ),
-                    self.hoje_card,
-                    self.dias_letivos_card,
-                ],
-            ),
+            content=self.lv_pagelet,
             bgcolor=self.cor_fundo,
             bottom_app_bar=ft.BottomAppBar(
                 height=65,
@@ -91,10 +117,12 @@ class PrimeiroDashboard(ft.View):
             end_drawer=self.drawer_pagelet,
             floating_action_button=ft.FloatingActionButton(
                 # text="Menu",
-                content=ft.Text(value="Menu", color=ft.Colors.WHITE),
+                # content=ft.Text(value="Menu", color=ft.Colors.WHITE),
+                content=ft.Icon(name=ft.Icons.SETTINGS, color=ft.Colors.WHITE, size=40),
                 on_click=self.open_pagelet_end_drawer,
                 shape=ft.CircleBorder(),
                 bgcolor=ft.Colors.RED,
+                # icon=ft.Icons.AC_UNIT,
             ),
             floating_action_button_location=ft.FloatingActionButtonLocation.CENTER_DOCKED,
         )
@@ -103,8 +131,14 @@ class PrimeiroDashboard(ft.View):
         self.controls = [
             # ft.Image(src="Campus_Viana_edited.png", color="green"),
             # self.hoje_card,
+            self.my_safe_area,
             self.pagelet,
         ]
 
     def open_pagelet_end_drawer(self, e):
         self.pagelet.show_drawer(self.drawer_pagelet)
+
+    def extrair_dt_literal(self) -> list[str]:
+        lista_data: list[str] = []
+        [lista_data.append(data.data) for data in self.dias_mes_corrente]
+        return lista_data

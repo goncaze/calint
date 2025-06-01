@@ -15,15 +15,14 @@ class MesCard(Cartao):
         self,
         page: ft.Page,
         dbs: DataDBSingleton,
-        ano: int,  # 2024,
-        mes: int,  # 10,
+        ano: int,
+        mes: int,
         todas_datas: list[Data] = None,
         todas_dt_literal: list[str] = None,
     ):
         super().__init__()
         self.page = page
         self.expand = True
-        # self.page.expand = False
         self.width = 350
 
         self.ano = ano
@@ -226,6 +225,8 @@ class MesCard(Cartao):
                     alignment=ft.alignment.center,
                 )
                 legenda = ft.Text(value=evento.evento)
+                # print("{legenda = }")
+                # print(f"{legenda = }")
 
                 # linha_cor_legenda = ft.Row( controls = [ cntn_cor, legenda ] )
                 self.coluna_de_eventos.controls.append(  # ft.Text('Teste')
@@ -233,33 +234,14 @@ class MesCard(Cartao):
                     ft.Row(controls=[cntn_cor, legenda])
                 )
 
-    def contar_eventos(self, evento: Evento, lista_eventos: list[Evento]) -> bool:
-        contagem: int = 0
-
-        for item_evento in lista_eventos:
-            print(f"{item_evento.evento = }")
-            if item_evento.evento == evento.evento:
-                contagem += 1
-            print(f"{evento.evento = } \t| {contagem = }")
-
-        return contagem == 1
-
-    def setar_linha_cor_legenda(
-        self, cor: str = "#eee222", evento: str = "Legenda"
-    ) -> ft.Row:
-        cntn_cor = ft.Container(width=30, height=25, bgcolor=cor)
-        legenda: str = evento
-
-        linha_cor_legenda = ft.Row(controls=[cntn_cor, legenda])
-
-        return linha_cor_legenda
-
     def determinar_cor_data(self, dia: int) -> str:
 
         cor = ""
         data_calendario = datetime.date(self.ano, self.mes, dia).strftime("%Y-%m-%d")
 
         # if calendar.weekday(self.ano, self.mes, dia) in (5, 6):
+
+        # Determinar se é final de semana (Domingo)
         if calendar.weekday(self.ano, self.mes, dia) == 6:
             cor = "#ea9999"
 
@@ -271,6 +253,7 @@ class MesCard(Cartao):
                 cor = self.todas_datas[indice].eventos[-1].evento_categoria.cor
                 self.filtrar_linha_cor_legenda(dia, self.todas_datas[indice].eventos)
 
+            # Determinar se é final de semana (Sábado)
             elif calendar.weekday(self.ano, self.mes, dia) == 5:
                 cor = "#ea9999"
 
@@ -313,3 +296,24 @@ class MesCard(Cartao):
             else:
                 i = 1
                 self.listas_containers[0].append(self.container(dia))
+
+    # def contar_eventos(self, evento: Evento, lista_eventos: list[Evento]) -> bool:
+    #     contagem: int = 0
+
+    #     for item_evento in lista_eventos:
+    #         print(f"{item_evento.evento = }")
+    #         if item_evento.evento == evento.evento:
+    #             contagem += 1
+    #         print(f"{evento.evento = } \t| {contagem = }")
+
+    #     return contagem == 1
+
+    # def setar_linha_cor_legenda(
+    #     self, cor: str = "#eee222", evento: str = "Legenda"
+    # ) -> ft.Row:
+    #     cntn_cor = ft.Container(width=30, height=25, bgcolor=cor)
+    #     legenda: str = evento
+
+    #     linha_cor_legenda = ft.Row(controls=[cntn_cor, legenda])
+
+    #     return linha_cor_legenda
